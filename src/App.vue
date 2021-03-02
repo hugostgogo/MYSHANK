@@ -1,23 +1,36 @@
 <template>
-  <v-app>
-    MY SHANK
-    <v-main>
+<v-app>
+  <v-main style="max-height: 100vh;">
+    <transition name="custom">
       <router-view />
-    </v-main>
-  </v-app>
+    </transition>
+  </v-main>
+</v-app>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
+  name: 'App'
 };
 </script>
 
 <style>
-  ::-webkit-scrollbar { width: 0px; }
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.custom-enter-active {
+  transition: opacity .75s;
+  transition-delay: .75s;
+}
+
+.custom-leave-active {
+  transition: opacity .75s;
+}
+
+.custom-enter,
+.custom-leave-to
+{
+  opacity: 0;
+}
 </style>
