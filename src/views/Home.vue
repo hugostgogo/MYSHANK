@@ -8,21 +8,21 @@
           </div>
           <div class="col-11 pa-0 d-flex flex-column justify-space-around">
             <div class="d-flex justify-start align-center">
-              <v-btn fab :color="phono.value ? 'primary' : ''" @click="setSelection('phono')">
+              <v-btn fab :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
                 <v-icon>mdi-play</v-icon>
               </v-btn>
               <span class="text-h5 ml-4">{{ phono.label }}</span>
             </div>
 
             <div class="d-flex justify-start align-center">
-              <v-btn fab :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection('feedBack')">
+              <v-btn fab :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
                 <v-icon>mdi-play</v-icon>
               </v-btn>
               <span class="text-h5 ml-4">{{ feedBack.label }}</span>
             </div>
 
             <div class="d-flex justify-start align-center">
-              <v-btn fab :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection('lineIn')">
+              <v-btn fab :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
                 <v-icon>mdi-play</v-icon>
               </v-btn>
               <span class="text-h5 ml-4">{{ lineIn.label }}</span>
@@ -59,7 +59,7 @@ import {
   mapGetters,
   mapMutations
 } from 'vuex'
-const electron = window.require("electron")
+
 export default {
   name: 'Home',
   computed: {
@@ -75,7 +75,7 @@ export default {
   methods: {
     ...mapMutations([
       'setSelection'
-    ])
+    ]),
   },
   data () {
     return {
@@ -84,9 +84,6 @@ export default {
   },
   mounted () {
     console.log(this)
-    electron.ipcRenderer.invoke('setSource', 'non').then((result) => {
-      console.log(result)
-    })
   }
 }
 </script>

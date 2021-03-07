@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+const electron = window.require("electron")
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -8,14 +10,17 @@ export default new Vuex.Store({
     commands: {
       phono: {
         label: 'Phono',
+        pin: 16,
         value: true
       },
       feedBack: {
         label: 'Feed back',
+        pin: 22,
         value: false
       },
       lineIn: {
-        label: 'Line in',
+        label: 'Line In',
+        pin: 18,
         value: false
       },
     },
@@ -45,21 +50,12 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setSelection(state, selection) {
-      state.commands.phono.value = false
-      state.commands.feedBack.value = false
-      state.commands.lineIn.value = false
-      switch (selection) {
-        case "phono":
-          state.commands.phono.value = true
-          break;
-        case "feedBack":
-          state.commands.feedBack.value = true
-          break;
-        case "lineIn":
-          state.commands.lineIn.value = true
-          break;
-      }
+    setSelection(state, pin) {
+      electron.ipcRenderer.invoke('setSource', pin).then((result) => {
+        state.commands.phono.value = result.phono ? true : false
+        state.commands.feedBack.value = result.feedBack ? true : false
+        state.commands.lineIn.value = result.lineIn ? true : false
+      })
     },
   },
   actions: {
