@@ -25,28 +25,41 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    phono: state => { return state.commands.phono },
-    feedBack: state => { return state.commands.feedBack },
-    lineIn: state => { return state.commands.lineIn },
-    heating: state => { return state.displays.heating * 100 / 255 },
-    heatingLabel: state => { return state.displays.heating * (1 / 255) },
-    speed: state => { return state.displays.speed * 100 / 255 }
+    phono: state => {
+      return state.commands.phono
+    },
+    feedBack: state => {
+      return state.commands.feedBack
+    },
+    lineIn: state => {
+      return state.commands.lineIn
+    },
+    heating: state => {
+      return state.displays.heating * 100 / 255
+    },
+    heatingLabel: state => {
+      return state.displays.heating * (1 / 255)
+    },
+    speed: state => {
+      return state.displays.speed * 100 / 255
+    }
   },
   mutations: {
-    setPhono (state) {
-      state.commands.feedBack.value = false
-      state.commands.lineIn.value = false
-      state.commands.phono.value = true
-    },
-    setFeedBack (state) {
-      state.commands.phono.value = false
-      state.commands.lineIn.value = false
-      state.commands.feedBack.value = true
-    },
-    setLineIn (state) {
+    setSelection(state, selection) {
       state.commands.phono.value = false
       state.commands.feedBack.value = false
-      state.commands.lineIn.value = true
+      state.commands.lineIn.value = false
+      switch (selection) {
+        case "phono":
+          state.commands.phono.value = true
+          break;
+        case "feedBack":
+          state.commands.feedBack.value = true
+          break;
+        case "lineIn":
+          state.commands.lineIn.value = true
+          break;
+      }
     },
   },
   actions: {

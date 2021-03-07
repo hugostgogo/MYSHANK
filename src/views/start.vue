@@ -13,9 +13,9 @@ export default {
     }
   },
   created() {
-    setTimeout(() => {
+
       this.$router.push('home')
-    }, 6000)
+
   },
 }
 </script>

@@ -5,6 +5,10 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+import { ipcMain, ipcRenderer } from 'electron'
+
+import rpio from 'rpio'
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -20,7 +24,7 @@ async function createWindow() {
 
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+      nodeIntegration: true
     },
 
   })
@@ -37,6 +41,8 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
 }
+
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -82,3 +88,25 @@ if (isDevelopment) {
     })
   }
 }
+
+
+// CUSTOM
+
+
+ipcMain.handle('setSource', (event, arg) => {
+  rpio.open(16, rpio.OUTPUT, rpio.LOW);
+
+  rpio.open(15, rpio.INPUT)
+
+  for (var i = 0; i < 5; i++) {
+          /* On for 1 second */
+          rpio.write(16, rpio.HIGH);
+          rpio.sleep(1);
+          console.log(rpio.read(16));
+          /* Off for half a second (500ms) */
+          rpio.write(16, rpio.LOW);
+          rpio.msleep(500);
+          console.log(rpio.read(16));
+  }
+  return 'Pin 15 is currently ' + rpio.read(16) + rpio.read(15)
+})
