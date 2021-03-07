@@ -1,11 +1,12 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import electron, { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 import { ipcMain, ipcRenderer } from 'electron'
+import store from '@/store'
 
 import rpio from 'rpio'
 
@@ -14,9 +15,11 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+let win
+
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 480,
     // fullscreen: true,
@@ -94,11 +97,30 @@ if (isDevelopment) {
 
 
 ipcMain.handle('setSource', (event, pin) => {
-  rpio.open(16, rpio.OUTPUT, rpio.LOW);
-  rpio.open(18, rpio.OUTPUT, rpio.LOW);
-  rpio.open(22, rpio.OUTPUT, rpio.LOW);
+  rpio.open(16, rpio.OUTPUT, rpio.LOW)
+  rpio.open(18, rpio.OUTPUT, rpio.LOW)
+  rpio.open(22, rpio.OUTPUT, rpio.LOW)
 
-  rpio.write(pin, rpio.HIGH);
-
+  rpio.write(pin, rpio.HIGH)
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
+})
+
+
+ipcMain.handle('getHeatingValue',(event) => {
+
+  rpio.i2cBegin()
+  rpio.i2cSetSlaveAddress(0x48)
+  rpio.i2cSetBaudRate(10000)
+
+  //var rxbuf = new Buffer(8)
+  rpio.i2cRead(16)
+
+  rpio.i2cEnd()
+
+  return parseInt(Math.random() * 255)
+})
+
+ipcMain.handle('getSpeedValue',(event) => {
+  rpio.open(16, rpio.OUTPUT)
+  return parseInt(Math.random() * 255)
 })
