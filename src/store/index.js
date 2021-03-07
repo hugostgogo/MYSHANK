@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-const electron = window.require("electron")
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -51,12 +49,23 @@ export default new Vuex.Store({
   },
   mutations: {
     setSelection(state, pin) {
-      electron.ipcRenderer.invoke('setSource', pin).then((result) => {
+      window.require("electron").ipcRenderer.invoke('setSource', pin).then((result) => {
         state.commands.phono.value = result.phono ? true : false
         state.commands.feedBack.value = result.feedBack ? true : false
         state.commands.lineIn.value = result.lineIn ? true : false
       })
     },
+    syncHeating(state) {
+      window.require("electron").ipcRenderer.invoke('getHeatingValue').then((value) => {
+        console.log(value)
+        state.displays.heating = value
+      })
+      window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
+        console.log(value)
+        state.displays.speed = value
+      })
+    }
+
   },
   actions: {
 
