@@ -86,7 +86,7 @@ export default {
   mounted () {
     window.setInterval(() => {
       this.syncHeating()
-    }, 1000)
+    }, 500)
 
   }
 }

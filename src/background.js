@@ -8,6 +8,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 import { ipcMain, ipcRenderer } from 'electron'
 import store from '@/store'
 
+import { execSync } from "child_process"
+
 import rpio from 'rpio'
 
 // Scheme must be registered before the app is ready
@@ -105,22 +107,24 @@ ipcMain.handle('setSource', (event, pin) => {
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
 })
 
+function run(cwd, command) {
+  return execSync(command, { cwd, encoding: "utf8" })
+}
+
+function getHeating(cwd) {
+  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0-voltage1_raw")
+}
+
+function getSpeed(cwd) {
+  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1-voltage1_raw")
+}
 
 ipcMain.handle('getHeatingValue',(event) => {
-
-  rpio.i2cBegin()
-  rpio.i2cSetSlaveAddress(0x48)
-  rpio.i2cSetBaudRate(10000)
-
-  //var rxbuf = new Buffer(8)
-  rpio.i2cRead(16)
-
-  rpio.i2cEnd()
-
-  return parseInt(Math.random() * 255)
+  var res = getHeating()
+  return (parseInt(res) + 2950) * 255 / 14250
 })
 
 ipcMain.handle('getSpeedValue',(event) => {
-  rpio.open(16, rpio.OUTPUT)
-  return parseInt(Math.random() * 255)
+  var res = getHeating()
+  return (parseInt(res) + 2950) * 255 / 14250
 })

@@ -61,7 +61,7 @@ export default new Vuex.Store({
         state.displays.heating = value
       })
       window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
-        console.log(value)
+        // console.log(value)
         state.displays.speed = value
       })
     }
