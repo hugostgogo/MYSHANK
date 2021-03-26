@@ -29,7 +29,7 @@ async function createWindow() {
 
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: true
+      nodeIntegration: true,
     },
 
   })
@@ -103,8 +103,15 @@ ipcMain.handle('setSource', (event, pin) => {
   rpio.open(18, rpio.OUTPUT, rpio.LOW)
   rpio.open(22, rpio.OUTPUT, rpio.LOW)
 
+
+
   rpio.write(pin, rpio.HIGH)
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
+})
+
+ipcMain.handle('setStatus', (event, payload) => {
+  rpio.open(24, rpio.OUTPUT) // Booléen
+  rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
 })
 
 function run(cwd, command) {

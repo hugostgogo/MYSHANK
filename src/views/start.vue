@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex flex-column align-center justify-center" style="height: 100%;">
-    <img src="@/assets/logo.png" />
-    <span class="text-h3">MY SHANK</span>
+    <img src="@/assets/logo.jpg" style="width: 100vw;"/>
   </div>
 </template>
 
@@ -13,9 +12,9 @@ export default {
     }
   },
   created() {
-
+    setTimeout(() => {
       this.$router.push('home')
-
+    }, 5000)
   },
 }
 </script>

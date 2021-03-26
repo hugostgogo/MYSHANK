@@ -23,8 +23,16 @@ export default new Vuex.Store({
       },
     },
     displays: {
-      heating: 15,
-      speed: 128
+      heating: {
+        value: 250,
+      },
+      speed: {
+        value: 128,
+      }
+    },
+    status: {
+      heating: false,
+      speed: false
     }
   },
   getters: {
@@ -38,14 +46,25 @@ export default new Vuex.Store({
       return state.commands.lineIn
     },
     heating: state => {
-      return state.displays.heating * 100 / 255
+      return (255 - state.displays.heating.value) / 255 * 100
     },
     heatingLabel: state => {
-      return state.displays.heating * (1 / 255)
+      var value = (state.displays.heating.value / 255).toString()
+      let result = value[0]
+      for (var i = 1; i < 4; i++) {
+        result += value[i]
+      }
+      return result
     },
     speed: state => {
-      return state.displays.speed * 100 / 255
-    }
+      return state.displays.speed.value * 100 / 255
+    },
+    speedStatus: state => {
+      return state.status.speed
+    },
+    heatingStatus: state => {
+      return state.status.heating
+    },
   },
   mutations: {
     setSelection(state, pin) {
@@ -57,14 +76,21 @@ export default new Vuex.Store({
     },
     syncHeating(state) {
       window.require("electron").ipcRenderer.invoke('getHeatingValue').then((value) => {
-        console.log(value)
-        state.displays.heating = value
+        state.displays.heating.value = value
       })
       window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
-        // console.log(value)
-        state.displays.speed = value
+        state.displays.speed.value = value
       })
-    }
+    },
+
+    async setStatus(state, payload) {
+      state.status = payload
+
+      const result = await window.require("electron").ipcRenderer.invoke('setStatus', payload)
+      console.log(result)
+
+    },
+
 
   },
   actions: {

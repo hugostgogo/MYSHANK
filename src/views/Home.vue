@@ -1,57 +1,62 @@
 <template>
-<v-container style="height: 100%" class="d-flex align-center px-3">
-  <div class="row" style="min-height: 100%; width: 100vw;">
-    <v-col md="6" sm="12" class="pr-1">
-      <v-card class="pl-5 pt-3 d-flex flex-column" height="100%">
-          <div class="col pa-0 text-center">
-            <span class="text-h3">Source selection</span>
-          </div>
-          <div class="col-11 pa-0 d-flex flex-column justify-space-around">
-            <div class="d-flex justify-start align-center">
-              <v-btn fab width="150px" height="150px" :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
-                <v-icon x-large>mdi-play</v-icon>
-              </v-btn>
-              <span class="text-h2 ml-4">{{ phono.label }}</span>
-            </div>
+<v-layout fill-height wrap class="pa-4">
 
-            <div class="d-flex justify-start align-center">
-              <v-btn fab width="150px" height="150px" :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
-                <v-icon x-large>mdi-play</v-icon>
-              </v-btn>
-              <span class="text-h2 ml-4">{{ feedBack.label }}</span>
-            </div>
+  <v-layout class="pa-3 ma-2" column justify-space-around align-content-space-around tag="v-card">
+    <v-card-text class="text-h5">Source selection</v-card-text>
+    <v-flex class="d-flex align-center">
+      <v-btn fab x-large :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
+        <img src="@/assets/phono.png" style="height: 40px" />
+      </v-btn>
+      <span class="text-h5 ml-4">{{ phono.label }}</span>
+    </v-flex>
 
-            <div class="d-flex justify-start align-center">
-              <v-btn fab width="150px" height="150px" :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
-                <v-icon x-large>mdi-play</v-icon>
-              </v-btn>
-              <span class="text-h2 ml-4">{{ lineIn.label }}</span>
-            </div>
-          </div>
+    <v-flex class="d-flex align-center">
+      <v-btn fab x-large :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
+        <img src="@/assets/feed_back.png" style="height: 40px" />
+      </v-btn>
+      <span class="text-h5 ml-4">{{ feedBack.label }}</span>
+    </v-flex>
 
-      </v-card>
-    </v-col>
+    <v-flex class="d-flex align-center">
+      <v-btn fab x-large :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
+        <img src="@/assets/line_in.png" style="height: 40px" />
+      </v-btn>
+      <span class="text-h5 ml-4">{{ lineIn.label }}</span>
+    </v-flex>
 
-    <v-col md="6" sm="12" class="d-flex flex-column pl-1" height="100%">
-      <v-col class="pa-0 pb-1">
-        <v-card style="min-height: 100%" class="d-flex flex-column justify-center">
-          <v-card-text>
-            <span v-html="`Stylus heating : ${heatingLabel.toPrecision(1)} A`" class="text-h2"></span>
-            <v-progress-linear v-model="heating" height="40" class="mt-5"></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col class="pt-1 pa-0">
-        <v-card style="min-height: 100%" class="d-flex flex-column justify-center">
-          <v-card-text>
-            <span v-html="`Motor speed : ${speed.toPrecision(3)} %`" class="text-h2"></span>
-            <v-progress-linear v-model="speed" height="40" class="mt-5"></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-col>
-  </div>
-</v-container>
+  </v-layout>
+
+  <v-card></v-card> <!-- center -->
+
+  <v-layout column>
+    <v-flex tag="v-card" class="ma-2 d-flex align-center" v-bind:shrink="status.speed && !status.heating" v-bind:grow="!status.speed && status.heating">
+      <v-card-text class="px-4">
+        <v-flex class="d-flex justify-space-between align-center">
+          <span class="text-h5">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
+          <v-switch v-model="status.heating"></v-switch>
+        </v-flex>
+        <v-fade-transition>
+          <v-progress-linear reverse readonly v-if="status.heating" v-model="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50" class="mt-5"></v-progress-linear>
+        </v-fade-transition>
+      </v-card-text>
+    </v-flex>
+
+    <v-flex tag="v-card" class="ma-2 d-flex align-center" v-bind:shrink="!status.speed && status.heating" v-bind:grow="status.speed && !status.heating">
+
+        <v-card-text class="px-4">
+          <v-flex class="d-flex justify-space-between align-center">
+            <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed.toPrecision(3) }} %</span></span>
+            <v-switch v-model="status.speed"></v-switch>
+          </v-flex>
+          <v-fade-transition>
+            <v-progress-linear v-if="status.speed" top v-model="speed" height="50"></v-progress-linear>
+          </v-fade-transition>
+        </v-card-text>
+
+    </v-flex>
+  </v-layout>
+
+</v-layout>
 </template>
 
 <script>
@@ -69,25 +74,44 @@ export default {
       'lineIn',
       'heating',
       'heatingLabel',
-      'speed'
-    ])
+      'speed',
+      'speedStatus',
+      'heatingStatus'
+    ]),
   },
   methods: {
     ...mapMutations([
       'setSelection',
-      'syncHeating'
+      'syncHeating',
+      'setStatus'
     ]),
   },
-  data () {
+  data() {
     return {
-      message: null
+      message: null,
+      status: {
+        heating: false,
+        speed: false
+      }
     }
   },
-  mounted () {
+  mounted() {
     window.setInterval(() => {
       this.syncHeating()
     }, 500)
 
+  },
+  watch: {
+    status: {
+      handler(val) {
+        this.setStatus(val)
+      },
+      deep: true
+    }
   }
 }
 </script>
+
+<style>
+
+</style>
