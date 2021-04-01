@@ -45,7 +45,7 @@
 
         <v-card-text class="px-4">
           <v-flex class="d-flex justify-space-between align-center">
-            <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed.toPrecision(3) }} %</span></span>
+            <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed }} %</span></span>
             <v-switch v-model="status.speed"></v-switch>
           </v-flex>
           <v-fade-transition>
@@ -99,7 +99,6 @@ export default {
     window.setInterval(() => {
       this.syncHeating()
     }, 500)
-
   },
   watch: {
     status: {

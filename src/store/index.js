@@ -57,7 +57,7 @@ export default new Vuex.Store({
       return result
     },
     speed: state => {
-      return state.displays.speed.value * 100 / 255
+      return parseInt(state.displays.speed.value * 100 / 255)
     },
     speedStatus: state => {
       return state.status.speed
@@ -83,12 +83,17 @@ export default new Vuex.Store({
       })
     },
 
-    async setStatus(state, payload) {
+    setStatus(state, payload) {
       state.status = payload
-
-      const result = await window.require("electron").ipcRenderer.invoke('setStatus', payload)
-      console.log(result)
-
+      var obj = payload
+      if (obj.speed == true) {
+        obj.speedValue = state.displays.speed.value
+      }
+      else {
+        obj.speedValue = 0
+      }
+      console.log(obj)
+      window.require("electron").ipcRenderer.invoke('setStatus', obj)
     },
 
 

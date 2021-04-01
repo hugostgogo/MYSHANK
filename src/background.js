@@ -110,8 +110,12 @@ ipcMain.handle('setSource', (event, pin) => {
 })
 
 ipcMain.handle('setStatus', (event, payload) => {
-  rpio.open(24, rpio.OUTPUT) // Booléen
+  rpio.open(24, rpio.OUTPUT)
   rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
+
+  rpio.open(26, rpio.PWM)
+  rpio.pwmSetRange(26, 1024)
+  rpio.pwmSetData(26, payload.speedValue)
 })
 
 function run(cwd, command) {
