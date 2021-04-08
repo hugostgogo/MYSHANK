@@ -2,26 +2,26 @@
 <v-layout fill-height wrap class="pa-4">
 
   <v-layout class="pa-3 ma-2" column justify-space-around align-content-space-around tag="v-card">
-    <v-card-text class="text-h5">Source selection</v-card-text>
+    <v-card-text class="text-h2">Source selection</v-card-text>
     <v-flex class="d-flex align-center">
-      <v-btn fab x-large :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
-        <img src="@/assets/phono.png" style="height: 40px" />
+      <v-btn fab style="width: 150px; height: 150px" :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
+        <img src="@/assets/phono.png" style="height: 50px" />
       </v-btn>
-      <span class="text-h5 ml-4">{{ phono.label }}</span>
+      <span class="text-h3 ml-4">{{ phono.label }}</span>
     </v-flex>
 
     <v-flex class="d-flex align-center">
-      <v-btn fab x-large :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
+      <v-btn fab style="height: 150px; width: 150px" :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
         <img src="@/assets/feed_back.png" style="height: 40px" />
       </v-btn>
-      <span class="text-h5 ml-4">{{ feedBack.label }}</span>
+      <span class="text-h3 ml-4">{{ feedBack.label }}</span>
     </v-flex>
 
     <v-flex class="d-flex align-center">
-      <v-btn fab x-large :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
+      <v-btn fab x-large style="width: 150px; height: 150px" :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
         <img src="@/assets/line_in.png" style="height: 40px" />
       </v-btn>
-      <span class="text-h5 ml-4">{{ lineIn.label }}</span>
+      <span class="text-h3 ml-4">{{ lineIn.label }}</span>
     </v-flex>
 
   </v-layout>
@@ -32,7 +32,7 @@
     <v-flex tag="v-card" class="ma-2 d-flex align-center" v-bind:shrink="status.speed && !status.heating" v-bind:grow="!status.speed && status.heating">
       <v-card-text class="px-4">
         <v-flex class="d-flex justify-space-between align-center">
-          <span class="text-h5">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
+          <span class="text-h3">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
           <v-switch v-model="status.heating"></v-switch>
         </v-flex>
         <v-fade-transition>
@@ -45,14 +45,13 @@
 
         <v-card-text class="px-4">
           <v-flex class="d-flex justify-space-between align-center">
-            <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed }} %</span></span>
+            <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speed | formatLabel }} %</span></span>
             <v-switch v-model="status.speed"></v-switch>
           </v-flex>
           <v-fade-transition>
             <v-progress-linear v-if="status.speed" top v-model="speed" height="50"></v-progress-linear>
           </v-fade-transition>
         </v-card-text>
-
     </v-flex>
   </v-layout>
 
@@ -106,6 +105,14 @@ export default {
         this.setStatus(val)
       },
       deep: true
+    }
+  },
+  filters: {
+    formatLabel(val) {
+      if(val < 0) return 0
+      if(1 < val) return 1
+      if(val.length < 4) val.length = 4
+      else return val
     }
   }
 }
