@@ -33,7 +33,7 @@
       <v-card-text class="px-4">
         <v-flex class="d-flex justify-space-between align-center">
           <span class="text-h3">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
-          <v-switch v-model="status.heating"></v-switch>
+          <v-switch v-model="status.heating" inset></v-switch>
         </v-flex>
         <v-fade-transition>
           <v-progress-linear reverse readonly v-if="status.heating" v-model="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50" class="mt-5"></v-progress-linear>
@@ -46,7 +46,7 @@
         <v-card-text class="px-4">
           <v-flex class="d-flex justify-space-between align-center">
             <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speed | formatLabel }} %</span></span>
-            <v-switch v-model="status.speed"></v-switch>
+            <v-switch v-model="status.speed" inset></v-switch>
           </v-flex>
           <v-fade-transition>
             <v-progress-linear v-if="status.speed" top v-model="speed" height="50"></v-progress-linear>
