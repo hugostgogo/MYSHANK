@@ -59,6 +59,9 @@ export default new Vuex.Store({
     speed: state => {
       return state.displays.speed.value
     },
+    speedLabel: state => {
+     return state.displays.speed.value / 1024 * 100
+    },
     speedStatus: state => {
       return state.status.speed
     },

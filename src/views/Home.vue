@@ -45,7 +45,7 @@
 
         <v-card-text class="px-4">
           <v-flex class="d-flex justify-space-between align-center">
-            <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speed }} %</span></span>
+            <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speedLabel }} %</span></span>
             <v-switch v-model="status.speed" inset></v-switch>
           </v-flex>
           <v-fade-transition>
@@ -73,6 +73,7 @@ export default {
       'heating',
       'heatingLabel',
       'speed',
+      'speedLabel',
       'speedStatus',
       'heatingStatus'
     ]),
