@@ -29,7 +29,7 @@
   <v-card></v-card> <!-- center -->
 
   <v-layout column>
-    <v-flex tag="v-card" class="ma-2 d-flex align-center" v-bind:shrink="status.speed && !status.heating" v-bind:grow="!status.speed && status.heating">
+    <v-flex tag="v-card" class="ma-2 d-flex align-center">
       <v-card-text class="px-4">
         <v-flex class="d-flex justify-space-between align-center">
           <span class="text-h3">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
@@ -41,7 +41,7 @@
       </v-card-text>
     </v-flex>
 
-    <v-flex tag="v-card" class="ma-2 d-flex align-center" v-bind:shrink="!status.speed && status.heating" v-bind:grow="status.speed && !status.heating">
+    <v-flex tag="v-card" class="ma-2 d-flex align-center">
 
         <v-card-text class="px-4">
           <v-flex class="d-flex justify-space-between align-center">
