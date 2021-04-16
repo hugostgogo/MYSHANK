@@ -99,23 +99,34 @@ if (isDevelopment) {
 
 
 ipcMain.handle('setSource', (event, pin) => {
+  rpio.init()
+
   rpio.open(16, rpio.OUTPUT, rpio.LOW)
   rpio.open(18, rpio.OUTPUT, rpio.LOW)
   rpio.open(22, rpio.OUTPUT, rpio.LOW)
 
+  rpio.write(22, rpio.LOW)
+  rpio.write(18, rpio.LOW)
+  rpio.write(16, rpio.LOW)
 
+  console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
 
   rpio.write(pin, rpio.HIGH)
+  
+  console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
+  
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
 })
 
 ipcMain.handle('setStatus', (event, payload) => {
+  //rpio.init({gpiomem: false})
   rpio.open(24, rpio.OUTPUT)
   rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
-
-  rpio.open(26, rpio.PWM)
-  rpio.pwmSetRange(26, 1024)
-  rpio.pwmSetData(26, payload.speedValue)
+  //console.log("PWM")
+  //rpio.open(32, rpio.PWM)
+  //rpio.pwmSetClockDivider(4096)
+  //rpio.pwmSetRange(32, 1024)
+  //rpio.pwmSetData(32, 1024)
 })
 
 function run(cwd, command) {
@@ -127,15 +138,15 @@ function getHeating(cwd) {
 }
 
 function getSpeed(cwd) {
-  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1-voltage1_raw")
+  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
 }
 
 ipcMain.handle('getHeatingValue',(event) => {
   var res = getHeating()
-  return (parseInt(res) + 2950) * 255 / 14250
+  return parseInt(res) / 241.27
 })
 
 ipcMain.handle('getSpeedValue',(event) => {
-  var res = getHeating()
-  return (parseInt(res) + 2950) * 255 / 14250
+  var res = getSpeed()
+  return parseInt(res) / 241.27
 })
