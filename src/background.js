@@ -24,7 +24,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 480,
-    fullscreen: true,
+    fullscreen: false,
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -99,8 +99,6 @@ if (isDevelopment) {
 
 
 ipcMain.handle('setSource', (event, pin) => {
-  rpio.init()
-
   rpio.open(16, rpio.OUTPUT, rpio.LOW)
   rpio.open(18, rpio.OUTPUT, rpio.LOW)
   rpio.open(22, rpio.OUTPUT, rpio.LOW)
@@ -119,14 +117,9 @@ ipcMain.handle('setSource', (event, pin) => {
 })
 
 ipcMain.handle('setStatus', (event, payload) => {
-  //rpio.init({gpiomem: false})
+  rpio.init()
   rpio.open(24, rpio.OUTPUT)
   rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
-  //console.log("PWM")
-  //rpio.open(32, rpio.PWM)
-  //rpio.pwmSetClockDivider(4096)
-  //rpio.pwmSetRange(32, 1024)
-  //rpio.pwmSetData(32, 1024)
 })
 
 function run(cwd, command) {
@@ -138,7 +131,12 @@ function getHeating(cwd) {
 }
 
 function getSpeed(cwd) {
-  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  var rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  if (rawValue > 100) rawValue = 100
+  if (rawValue < 0) rawValue = 0
+  var rangeValue = parseInt(rawValue * 9.42)
+  run(cwd, `gpio pwm 26 ${rangeValue}`)
+  return rangeValue
 }
 
 ipcMain.handle('getHeatingValue',(event) => {
