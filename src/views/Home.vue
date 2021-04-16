@@ -45,7 +45,7 @@
 
         <v-card-text class="px-4">
           <v-flex class="d-flex justify-space-between align-center">
-            <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speedLabel }} %</span></span>
+            <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speedLabel | truncate(5) }} %</span></span>
             <v-switch v-model="status.speed" inset></v-switch>
           </v-flex>
           <v-fade-transition>
@@ -108,10 +108,8 @@ export default {
     }
   },
   filters: {
-    formatLabel(val) {
-      if(val < 0) return 0
-      if(1 < val) return 1
-      if(val.length < 4) val.length = 4
+    truncate (val, limiter) {
+      if(val.length > limiter ) val.length = limiter
       else return val
     }
   }
