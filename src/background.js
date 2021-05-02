@@ -24,7 +24,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 480,
-    fullscreen: true,
+    fullscreen: false,
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -116,6 +116,24 @@ ipcMain.handle('setStatus', (event, payload) => {
   rpio.open(26, rpio.PWM)
   rpio.pwmSetRange(26, 1024)
   rpio.pwmSetData(26, payload.speedValue)
+})
+
+ipcMain.handle('leadIn', (event, paload) => {
+  rpio.open(26, rpio.PWM)
+  rpio.pwmSetRange(26, 1024)
+  rpio.pwmSetData(26, 1024)
+  setTimeout(() => {
+    rpio.pwmSetData(26, 0)
+  }, 5400)
+})
+
+ipcMain.handle('space', (event, paload) => {
+  rpio.open(26, rpio.PWM)
+  rpio.pwmSetRange(26, 1024)
+  rpio.pwmSetData(26, 1024)
+  setTimeout(() => {
+    rpio.pwmSetData(26, 0)
+  }, 450)
 })
 
 function run(cwd, command) {

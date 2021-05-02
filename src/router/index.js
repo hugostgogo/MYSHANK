@@ -5,9 +5,24 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+    path: '/selection',
+    name: 'selection',
+    component: () => import(/* webpackChunkName: "home" */ '../views/selection.vue')
+  },
+  {
+    path: '/sensors',
+    name: 'sensors',
+    component: () => import(/* webpackChunkName: "home" */ '../views/sensors.vue')
+  },
+  {
+    path: '/functions',
+    name: 'functions',
+    component: () => import(/* webpackChunkName: "home" */ '../views/functions.vue')
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import(/* webpackChunkName: "home" */ '../views/settings.vue')
   },
   {
     path: '/',

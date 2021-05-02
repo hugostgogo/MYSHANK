@@ -1,6 +1,12 @@
 <template>
 <v-app>
   <v-main style="max-height: 100vh;">
+  <v-tabs>
+    <v-tab :to="{ name: 'selection' }">Source selection</v-tab>
+    <v-tab :to="{ name: 'sensors' }">Sensors</v-tab>
+    <v-tab :to="{ name: 'functions' }">Functions</v-tab>
+    <v-tab :to="{ name: 'settings' }">Settings</v-tab>
+  </v-tabs>
     <transition name="custom">
       <router-view />
     </transition>
@@ -9,8 +15,19 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex"
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+    window.setInterval(() => {
+      this.syncHeating()
+    }, 500)
+  },
+  methods: {
+    ...mapMutations([
+      'syncHeating'
+    ])
+  }
 };
 </script>
 
