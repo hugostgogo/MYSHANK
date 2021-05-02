@@ -24,7 +24,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 480,
-    fullscreen: false,
+    fullscreen: true,
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -110,9 +110,9 @@ ipcMain.handle('setSource', (event, pin) => {
   console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
 
   rpio.write(pin, rpio.HIGH)
-  
+
   console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
-  
+
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
 })
 
