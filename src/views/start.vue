@@ -13,7 +13,7 @@ export default {
   },
   created() {
     setTimeout(() => {
-      this.$router.push('home')
+      this.$router.push('selection')
     }, 5000)
   },
 }

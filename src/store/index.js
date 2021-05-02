@@ -102,7 +102,12 @@ export default new Vuex.Store({
 
   },
   actions: {
-
+    leadIn () {
+      window.require("electron").ipcRenderer.invoke('leadIn')
+    },
+    space () {
+      window.require("electron").ipcRenderer.invoke('space')  
+    }
   },
   modules: {
 

@@ -122,6 +122,24 @@ ipcMain.handle('setStatus', (event, payload) => {
   rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
 })
 
+ipcMain.handle('leadIn', (event, paload) => {
+  rpio.open(26, rpio.PWM)
+  rpio.pwmSetRange(26, 1024)
+  rpio.pwmSetData(26, 1024)
+  setTimeout(() => {
+    rpio.pwmSetData(26, 0)
+  }, 5400)
+})
+
+ipcMain.handle('space', (event, paload) => {
+  rpio.open(26, rpio.PWM)
+  rpio.pwmSetRange(26, 1024)
+  rpio.pwmSetData(26, 1024)
+  setTimeout(() => {
+    rpio.pwmSetData(26, 0)
+  }, 450)
+})
+
 function run(cwd, command) {
   return execSync(command, { cwd, encoding: "utf8" })
 }

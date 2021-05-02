@@ -1,117 +1,31 @@
 <template>
 <v-layout fill-height wrap class="pa-4">
 
-  <v-layout class="pa-3 ma-2" column justify-space-around align-content-space-around tag="v-card">
-    <v-card-text class="text-h2">Source selection</v-card-text>
-    <v-flex class="d-flex align-center">
-      <v-btn fab style="width: 150px; height: 150px" :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
-        <img src="@/assets/phono.png" style="height: 100px" />
-      </v-btn>
-      <span class="text-h3 ml-4">{{ phono.label }}</span>
-    </v-flex>
-
-    <v-flex class="d-flex align-center">
-      <v-btn fab style="height: 150px; width: 150px" :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
-        <img src="@/assets/feed_back.png" style="height: 100px" />
-      </v-btn>
-      <span class="text-h3 ml-4">{{ feedBack.label }}</span>
-    </v-flex>
-
-    <v-flex class="d-flex align-center">
-      <v-btn fab x-large style="width: 150px; height: 150px" :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
-        <img src="@/assets/line_in.png" style="height: 100px" />
-      </v-btn>
-      <span class="text-h3 ml-4">{{ lineIn.label }}</span>
-    </v-flex>
-
+  <v-layout class="pa-3 ma-2" column>
+    <selection/>
   </v-layout>
 
-  <v-card></v-card> <!-- center -->
+  <v-card></v-card>
 
   <v-layout column>
-    <v-flex tag="v-card" class="ma-2 d-flex align-center">
-      <v-card-text class="px-4">
-        <v-flex class="d-flex justify-space-between align-center">
-          <span class="text-h3">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
-          <v-switch v-model="status.heating" inset></v-switch>
-        </v-flex>
-        <v-fade-transition>
-          <v-progress-linear reverse readonly v-if="status.heating" v-model="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50" class="mt-5"></v-progress-linear>
-        </v-fade-transition>
-      </v-card-text>
-    </v-flex>
-
-    <v-flex tag="v-card" class="ma-2 d-flex align-center">
-
-        <v-card-text class="px-4">
-          <v-flex class="d-flex justify-space-between align-center">
-            <span class="text-h3">Motor speed <span v-if="status.speed">: {{ speedLabel | truncate(5) }} %</span></span>
-            <v-switch v-model="status.speed" inset></v-switch>
-          </v-flex>
-          <v-fade-transition>
-            <v-progress-linear v-if="status.speed" top v-model="speed" height="50"></v-progress-linear>
-          </v-fade-transition>
-        </v-card-text>
-    </v-flex>
+    <heating />
+    <motor />
   </v-layout>
+  <fab></fab>
 </v-layout>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapMutations
-} from 'vuex'
-
+import fab from '../components/fab'
+import heating from '../components/heating'
+import motor from '../components/motor'
+import selection from '../components/selection'
 export default {
-  name: 'Home',
-  computed: {
-    ...mapGetters([
-      'phono',
-      'feedBack',
-      'lineIn',
-      'heating',
-      'heatingLabel',
-      'speed',
-      'speedLabel',
-      'speedStatus',
-      'heatingStatus'
-    ]),
-  },
-  methods: {
-    ...mapMutations([
-      'setSelection',
-      'syncHeating',
-      'setStatus'
-    ]),
-  },
-  data() {
-    return {
-      message: null,
-      status: {
-        heating: false,
-        speed: false
-      }
-    }
-  },
-  mounted() {
-    window.setInterval(() => {
-      this.syncHeating()
-    }, 500)
-  },
-  watch: {
-    status: {
-      handler(val) {
-        this.setStatus(val)
-      },
-      deep: true
-    }
-  },
-  filters: {
-    truncate (val, limiter) {
-      if(val.length > limiter ) val.length = limiter
-      else return val
-    }
+  components: {
+    fab,
+    heating,
+    motor,
+    selection
   }
 }
 </script>
