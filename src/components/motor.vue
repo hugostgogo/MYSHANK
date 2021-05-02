@@ -1,6 +1,6 @@
 <template>
-<v-card class="ma-2 pa-5 d-flex align-center">
-    <v-card-text class="px-4">
+<v-card class="mt-2 pa-3 px-5 d-flex align-center" style="flex-grow: 1">
+    <v-flex>
       <v-flex class="d-flex justify-space-between align-center">
         <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed }} %</span></span>
         <v-switch v-model="status.speed"></v-switch>
@@ -8,7 +8,7 @@
       <v-fade-transition>
         <v-progress-linear v-if="status.speed" top v-model="speed" height="50"></v-progress-linear>
       </v-fade-transition>
-    </v-card-text>
+    </v-flex>
 </v-card>
 </template>
 <script>

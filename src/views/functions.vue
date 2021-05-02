@@ -1,7 +1,7 @@
 <template>
-  <v-layout style="width: 100%">
+  <v-flex>
     <functions />
-  </v-layout>
+  </v-flex>
 </template>
 <script>
 import functions from '../components/functions'

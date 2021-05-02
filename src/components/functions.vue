@@ -1,17 +1,15 @@
 <template>
-<v-row class="row wrap pa-5">
-      <v-card @click="leadIn" class="ma-3 pa-3 col-3">
-        <v-responsive :aspect-ratio="1">
-          <v-card-title>Lead in</v-card-title>
-        </v-responsive>
+<v-flex class="d-flex" style="height: 100%; width: 100%">
+      <v-card @click="leadIn" class="mr-3 pa-3 col-3 d-flex flex-column justify-center align-center" style="flex-grow: 1" v-ripple="{ class: 'primary--text' }">
+          <v-icon size="100">mdi-contain-start</v-icon>
+          <v-card-title>LEAD IN</v-card-title>
       </v-card>
 
-      <v-card tag="v-card" class="ma-3 pa-3 col-3">
-        <v-responsive :aspect-ratio="1">
-          <v-card-title>Space</v-card-title>
-        </v-responsive>
+      <v-card @click="space" class="pa-3 col-3 d-flex flex-column justify-center align-center" style="flex-grow: 1" v-ripple="{ class: 'primary--text' }">
+        <v-icon size="100">mdi-keyboard-space</v-icon>
+        <v-card-title>SPACE</v-card-title>
       </v-card>
-</v-row>
+</v-flex>
 </template>
 <script>
 import { mapActions } from 'vuex'

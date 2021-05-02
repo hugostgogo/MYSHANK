@@ -5,24 +5,31 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/selection',
-    name: 'selection',
-    component: () => import(/* webpackChunkName: "home" */ '../views/selection.vue')
-  },
-  {
-    path: '/sensors',
-    name: 'sensors',
-    component: () => import(/* webpackChunkName: "home" */ '../views/sensors.vue')
-  },
-  {
-    path: '/functions',
-    name: 'functions',
-    component: () => import(/* webpackChunkName: "home" */ '../views/functions.vue')
-  },
-  {
-    path: '/settings',
-    name: 'settings',
-    component: () => import(/* webpackChunkName: "home" */ '../views/settings.vue')
+    path: '/started',
+    name: 'started',
+    component: () => import('../layouts/mainLayout'),
+    children: [
+      {
+        path: '/selection',
+        name: 'selection',
+        component: () => import(/* webpackChunkName: "home" */ '../views/selection.vue')
+      },
+      {
+        path: '/sensors',
+        name: 'sensors',
+        component: () => import(/* webpackChunkName: "home" */ '../views/sensors.vue')
+      },
+      {
+        path: '/functions',
+        name: 'functions',
+        component: () => import(/* webpackChunkName: "home" */ '../views/functions.vue')
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        component: () => import(/* webpackChunkName: "home" */ '../views/settings.vue')
+      }
+    ]
   },
   {
     path: '/',
@@ -30,7 +37,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/start.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../layouts/start.vue')
   }
 ]
 

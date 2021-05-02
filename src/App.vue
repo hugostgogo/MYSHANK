@@ -1,12 +1,6 @@
 <template>
 <v-app>
   <v-main style="max-height: 100vh;">
-  <v-tabs>
-    <v-tab :to="{ name: 'selection' }">Source selection</v-tab>
-    <v-tab :to="{ name: 'sensors' }">Sensors</v-tab>
-    <v-tab :to="{ name: 'functions' }">Functions</v-tab>
-    <v-tab :to="{ name: 'settings' }">Settings</v-tab>
-  </v-tabs>
     <transition name="custom">
       <router-view />
     </transition>
@@ -37,17 +31,18 @@ export default {
 }
 
 .custom-enter-active {
-  transition: opacity .75s;
-  transition-delay: .75s;
+  transition: all .25s;
+  transition-delay: .25s;
 }
 
 .custom-leave-active {
-  transition: opacity .75s;
+  transition: all .25s;
 }
 
 .custom-enter,
 .custom-leave-to
 {
+  transform: scale(0);
   opacity: 0;
 }
 </style>

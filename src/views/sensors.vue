@@ -1,10 +1,8 @@
 <template>
-  <v-layout column>
-    <v-container>
+    <v-flex class="d-flex flex-column">
       <heating />
       <motor />
-    </v-container>
-  </v-layout>
+    </v-flex>
 </template>
 
 <script>

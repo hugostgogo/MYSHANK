@@ -1,9 +1,7 @@
 <template>
-  <v-layout>
-    <v-container>
+  <v-flex>
       <selection />
-    </v-container>
-  </v-layout>
+  </v-flex>
 </template>
 <script>
 import selection from '../components/selection'

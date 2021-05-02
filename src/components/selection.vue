@@ -1,31 +1,45 @@
 <template>
-  <v-card class="pa-3 pb-8 ma-3">
-    <v-card-text class="text-h5">Source selection</v-card-text>
+  <v-card class="pa-5 d-flex flex-column align-stretch" style="height: 100%">
+    <v-flex class="d-flex justify-space-between align-center" shrink>
+      <span class="text-h5">Source selection</span>
+      <fab />
+    </v-flex>
+    <v-flex class="d-flex no-wrap justify-center align-stretch justify-space-between pa-5" grow style="width:100%">
+      <v-flex class="d-flex flex-column align-center" xs3>
+        <v-card style="height:100%; width: 100%" :class="`d-flex flex-column justify-center align-center ${phono.value ? 'primary' : ''}`" @click="setSelection(phono.pin)">
+          <img src="@/assets/phono.png" style="height: 100px" />
+          <span class="text-h5 mt-3">{{ phono.label }}</span>
+        </v-card>
+      </v-flex>
+
+      <v-flex class="d-flex flex-column align-center" xs3>
+        <v-card style="height:100%; width: 100%" :class="`d-flex flex-column justify-center align-center ${feedBack.value ? 'primary' : ''}`" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
+          <img src="@/assets/feed_back.png" style="height: 100px" />
+          <span class="text-h5 mt-3">{{ feedBack.label }}</span>
+        </v-card>
+      </v-flex>
+
+      <v-flex class="d-flex flex-column align-center" xs3>
+        <v-card style="height:100%; width: 100%" :class="`d-flex flex-column justify-center align-center ${lineIn.value ? 'primary' : ''}`" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
+          <img src="@/assets/line_in.png" style="height: 100px" />
+          <span class="text-h5 mt-3">{{ lineIn.label }}</span>
+        </v-card>
+      </v-flex>
+    </v-flex>
     <v-flex class="d-flex">
-      <v-flex class="d-flex flex-column align-center">
-        <v-btn fab style="height:100px; width: 100px" :color="phono.value ? 'primary' : ''" @click="setSelection(phono.pin)">
-          <img src="@/assets/phono.png" style="height: 50px" />
-        </v-btn>
-        <span class="text-h5 mt-3">{{ phono.label }}</span>
+      <v-flex class="d-flex flex-column justify-center align-center">
+        <h5>STYLUS HEATING</h5>
+        <h3>{{ heatingLabel }} A</h3>
       </v-flex>
-
-      <v-flex class="d-flex flex-column align-center">
-        <v-btn fab style="height:100px; width: 100px" :color="feedBack.value ? 'primary' : ''" v-model="feedBack.value" @click="setSelection(feedBack.pin)">
-          <img src="@/assets/feed_back.png" style="height: 50px" />
-        </v-btn>
-        <span class="text-h5 mt-3">{{ feedBack.label }}</span>
-      </v-flex>
-
-      <v-flex class="d-flex flex-column align-center">
-        <v-btn fab style="height:100px; width: 100px" :color="lineIn.value ? 'primary' : ''" v-model="lineIn.value" @click="setSelection(lineIn.pin)">
-          <img src="@/assets/line_in.png" style="height: 50px" />
-        </v-btn>
-        <span class="text-h5 mt-3">{{ lineIn.label }}</span>
+      <v-flex class="d-flex flex-column justify-center align-center">
+        <h5>MOTOR SPEED</h5>
+        <h3>{{ speedLabel }} %</h3>
       </v-flex>
     </v-flex>
   </v-card>
 </template>
 <script>
+import fab from '../components/fab'
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   computed: {
@@ -33,6 +47,8 @@ export default {
       'phono',
       'feedBack',
       'lineIn',
+      'heatingLabel',
+      'speedLabel'
     ]),
   },
   methods: {
@@ -40,5 +56,8 @@ export default {
       'setSelection'
     ]),
   },
+  components: {
+    fab
+  }
 }
 </script>
