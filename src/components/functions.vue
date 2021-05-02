@@ -1,16 +1,17 @@
 <template>
-  <v-list>
-    <v-list-item>
-      <v-btn @click="leadIn">
-        Lead in
-      </v-btn>
-    </v-list-item>
-    <v-list-item>
-      <v-btn @click="space">
-        space
-      </v-btn>
-    </v-list-item>
-  </v-list>
+<v-row class="row wrap pa-5">
+      <v-card @click="leadIn" class="ma-3 pa-3 col-3">
+        <v-responsive :aspect-ratio="1">
+          <v-card-title>Lead in</v-card-title>
+        </v-responsive>
+      </v-card>
+
+      <v-card tag="v-card" class="ma-3 pa-3 col-3">
+        <v-responsive :aspect-ratio="1">
+          <v-card-title>Space</v-card-title>
+        </v-responsive>
+      </v-card>
+</v-row>
 </template>
 <script>
 import { mapActions } from 'vuex'

@@ -1,7 +1,9 @@
 <template>
-  <v-layout>
-    <heating />
-    <motor />
+  <v-layout column>
+    <v-container>
+      <heating />
+      <motor />
+    </v-container>
   </v-layout>
 </template>
 

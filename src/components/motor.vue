@@ -1,5 +1,5 @@
 <template>
-<v-card tag="v-card" class="ma-2 d-flex align-center">
+<v-card class="ma-2 pa-5 d-flex align-center">
     <v-card-text class="px-4">
       <v-flex class="d-flex justify-space-between align-center">
         <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed }} %</span></span>

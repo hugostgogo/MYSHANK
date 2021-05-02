@@ -1,6 +1,8 @@
 <template>
   <v-layout>
-    <selection />
+    <v-container>
+      <selection />
+    </v-container>
   </v-layout>
 </template>
 <script>

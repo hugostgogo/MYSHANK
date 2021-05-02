@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout style="width: 100%">
     <functions />
   </v-layout>
 </template>
