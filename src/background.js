@@ -12,6 +12,7 @@ import { execSync } from "child_process"
 
 import rpio from 'rpio'
 
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
