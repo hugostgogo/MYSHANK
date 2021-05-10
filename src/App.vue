@@ -9,10 +9,12 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex"
+import { mapMutations, mapGetters, mapActions } from "vuex"
 export default {
   name: 'App',
   mounted() {
+    this.initialize()
+
     const leadInDelay = localStorage.getItem('leadInDelay')
     const spaceDelay = localStorage.getItem('spaceDelay')
 
@@ -30,6 +32,9 @@ export default {
       'syncSpeed',
       'setLeadInDelay',
       'setSpaceDelay'
+    ]),
+    ...mapActions([
+      'initialize'
     ])
   },
   computed: {

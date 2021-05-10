@@ -138,6 +138,10 @@ export default new Vuex.Store({
     },
     setColor (store, color) {
       localStorage.setItem('primaryColor', color)
+    },
+    initialize (store) {
+      store.commit('setSpeed', false)
+      store.commit('setHeating', false)
     }
   },
   modules: {
