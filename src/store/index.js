@@ -33,6 +33,12 @@ export default new Vuex.Store({
     status: {
       heating: false,
       speed: false
+    },
+    space: {
+      delay: 450
+    },
+    leadIn: {
+      delay: 5400
     }
   },
   getters: {
@@ -68,6 +74,12 @@ export default new Vuex.Store({
     heatingStatus: state => {
       return state.status.heating
     },
+    leadInDelay: state => {
+      return state.leadIn.delay
+    },
+    spaceDelay: state => {
+      return state.space.delay
+    }
   },
   mutations: {
     setSelection(state, pin) {
@@ -99,15 +111,29 @@ export default new Vuex.Store({
       console.log(obj)
       window.require("electron").ipcRenderer.invoke('setStatus', obj)
     },
+    setLeadInDelay(state, delay) {
+      state.leadIn.delay = delay
+    },
+    setSpaceDelay(state, delay) {
+      state.space.delay = delay
+    }
 
 
   },
   actions: {
-    leadIn () {
-      window.require("electron").ipcRenderer.invoke('leadIn')
+    leadIn (state) {
+      window.require("electron").ipcRenderer.invoke('leadIn', state.leadIn.delay)
     },
     space () {
       window.require("electron").ipcRenderer.invoke('space')
+    },
+    setLeadIn (state, delay) {
+      localStorage.setItem('leadInDelay', delay)
+      state.commit('setLeadInDelay', delay)
+    },
+    setSpace (state, delay) {
+      localStorage.setItem('spaceDelay', delay)
+      state.commit('setSpaceDelay', delay)
     }
   },
   modules: {
