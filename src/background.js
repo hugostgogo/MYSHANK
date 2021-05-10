@@ -121,20 +121,20 @@ ipcMain.handle('setStatus', (event, payload) => {
   rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
 })
 
-ipcMain.handle('leadIn', (event, paload) => {
-  run(cwd, "gpio mode 26 pwm")
-  run(cwd, "gpio pwm 26 1024")
-  setTimeout(() => {
-    run(cwd, "gpio pwm 26 0")
-  }, 5400)
-})
-
-ipcMain.handle('space', (event) => {
+ipcMain.handle('leadIn', (event, delay) => {
   run(undefined, "gpio mode 26 pwm")
   run(undefined, "gpio pwm 26 1024")
   setTimeout(() => {
     run(undefined, "gpio pwm 26 0")
-  }, 450)
+  }, delay)
+})
+
+ipcMain.handle('space', (event, delay) => {
+  run(undefined, "gpio mode 26 pwm")
+  run(undefined, "gpio pwm 26 1024")
+  setTimeout(() => {
+    run(undefined, "gpio pwm 26 0")
+  }, delay)
 })
 
 function run(cwd, command) {
