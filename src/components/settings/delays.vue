@@ -18,27 +18,42 @@
       <v-flex class="d-flex justify-center align-center">
         <v-flex column class="px-16 pt-10">
           <label class="text-h6">LEAD IN delay</label>
-          <v-flex class="d-flex align-center justify-center pb-3">
-            <v-text-field outlined hide-details suffix="ms" v-model="form.leadInDelay" @keyup.enter="setLeadIn(form.leadInDelay)">
-              <template v-slot:append>
-                <v-btn color="primary" class="ml-2 mt-n2" @click="setLeadIn(form.leadInDelay)" outlined>
-                  set
-                  <v-icon right>mdi-check</v-icon>
-                </v-btn>
-              </template>
-            </v-text-field>
+          <v-flex class="d-flex align-center justify-space-around">
+
+              <v-btn x-large icon color="error">
+                <v-icon x-large>mdi-minus</v-icon>
+              </v-btn>
+
+            <v-flex class="d-flex align-center justify-center pa-5">
+              <v-text-field outlined hide-details suffix="ms" v-model="form.leadInDelay" @keyup.enter="setLeadIn(form.leadInDelay)">
+              </v-text-field>
+            </v-flex>
+
+              <v-btn x-large icon color="success">
+                <v-icon x-large>mdi-plus</v-icon>
+              </v-btn>
 
           </v-flex>
+
+
+
           <label class="text-h6">SPACE delay</label>
           <v-flex class="d-flex align-center justify-center pb-3">
             <v-text-field outlined hide-details suffix="ms" v-model="form.spaceDelay" @keyup.enter="setSpace(form.spaceDelay)">
-              <template v-slot:append>
-                <v-btn color="primary" class="ml-2 mt-n2" @click="setSpace(form.spaceDelay)" outlined>
-                  set
-                  <v-icon right>mdi-check</v-icon>
-                </v-btn>
-              </template>
             </v-text-field>
+
+          </v-flex>
+          <v-flex class="d-flex align-center justify-space-around">
+            <v-flex shrink>
+              <v-btn x-large icon color="error">
+                <v-icon x-large>mdi-minus</v-icon>
+              </v-btn>
+            </v-flex>
+            <v-flex shrink>
+              <v-btn x-large icon color="success">
+                <v-icon x-large>mdi-plus</v-icon>
+              </v-btn>
+            </v-flex>
           </v-flex>
         </v-flex>
       </v-flex>
