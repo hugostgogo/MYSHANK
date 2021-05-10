@@ -113,6 +113,7 @@ export default new Vuex.Store({
     },
     setLeadInDelay(state, delay) {
       state.leadIn.delay = delay
+      console.log(delay)
     },
     setSpaceDelay(state, delay) {
       state.space.delay = delay
@@ -134,6 +135,10 @@ export default new Vuex.Store({
     setSpace (store, delay) {
       localStorage.setItem('spaceDelay', delay)
       store.commit('setSpaceDelay', delay)
+      console.log(delay)
+    },
+    setColor (store, color) {
+      localStorage.setItem('primaryColor', color)
     }
   },
   modules: {

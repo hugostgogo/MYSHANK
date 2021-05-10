@@ -16,10 +16,18 @@ export default {
     window.setInterval(() => {
       this.syncHeating()
     }, 500)
+
+    const leadInDelay = localStorage.getItem('leadInDelay')
+    const spaceDelay = localStorage.getItem('spaceDelay')
+
+    if (leadInDelay) this.setLeadInDelay(leadInDelay)
+    if (spaceDelay) this.setSpaceDelay(spaceDelay)
   },
   methods: {
     ...mapMutations([
-      'syncHeating'
+      'syncHeating',
+      'setLeadInDelay',
+      'setSpaceDelay'
     ])
   }
 };
