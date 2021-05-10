@@ -147,17 +147,22 @@ function getHeating(cwd) {
 }
 
 function getSpeed(cwd) {
-  var rawValue = Math.random() * 22000 // run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  var rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
   var rangeValue = parseInt(rawValue / 241.27)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 1024) rangeValue = 1024
   console.log(`Speed : ${rangeValue}`)
+  console.log(`Speed non format : ${rawValue}`)
   run(cwd, `gpio pwm 26 ${rangeValue}`)
   return rangeValue
 }
 
 ipcMain.handle('getHeatingValue',(event) => {
   var res = getHeating()
+
+  console.log(`Heating format: ${parseInt(res) / 241.27}`)
+  console.log(`Heating non-format: ${parseInt(res)}`)
+
   return parseInt(res) / 241.27
 })
 
