@@ -89,31 +89,25 @@ export default new Vuex.Store({
         state.commands.lineIn.value = result.lineIn ? true : false
       })
     },
+
     syncHeating(state) {
-      /* window.require("electron").ipcRenderer.invoke('getHeatingValue').then((value) => {
+      window.require("electron").ipcRenderer.invoke('getHeatingValue').then((value) => {
         state.displays.heating.value = value
       })
-      window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
-        state.displays.speed.value = value
-      }) */
-      state.displays.speed.value = 53
     },
 
-    setStatus(state, payload) {
-      state.status = payload
-      var obj = payload
-      if (obj.speed == true) {
-        obj.speedValue = state.displays.speed.value
-      }
-      else {
-        obj.speedValue = 0
-      }
-      console.log(obj)
-      window.require("electron").ipcRenderer.invoke('setStatus', obj)
+    syncSpeed(state) {
+      window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
+        state.displays.speed.value = value
+      })
+    },
+
+    setHeating(state, payload) {
+      state.status.heating = payload
+      window.require("electron").ipcRenderer.invoke('setHeating', payload)
     },
     setLeadInDelay(state, delay) {
       state.leadIn.delay = delay
-      console.log(delay)
     },
     setSpaceDelay(state, delay) {
       state.space.delay = delay

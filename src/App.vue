@@ -9,26 +9,35 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex"
+import { mapMutations, mapGetters } from "vuex"
 export default {
   name: 'App',
   mounted() {
-    window.setInterval(() => {
-      this.syncHeating()
-    }, 500)
-
     const leadInDelay = localStorage.getItem('leadInDelay')
     const spaceDelay = localStorage.getItem('spaceDelay')
 
     if (leadInDelay) this.setLeadInDelay(leadInDelay)
     if (spaceDelay) this.setSpaceDelay(spaceDelay)
+
+    window.setInterval(() => {
+      if (this.heatingStatus) this.syncHeating()
+      if (this.speedStatus) this.syncSpeed()
+    }, 500)
   },
   methods: {
     ...mapMutations([
       'syncHeating',
+      'syncSpeed',
       'setLeadInDelay',
       'setSpaceDelay'
     ])
+  },
+  computed: {
+    ...mapGetters({
+      speedStatus: 'speedStatus',
+      heatingStatus: 'heatingStatus'
+    })
+
   }
 };
 </script>

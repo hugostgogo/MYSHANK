@@ -27,13 +27,13 @@ import { mapGetters, mapMutations } from 'vuex'
     },
     methods: {
       ...mapMutations([
-        'setStatus'
+        'setMotor'
       ]),
     },
     watch: {
       status: {
         handler(val) {
-          this.setStatus(val)
+          this.setMotor(val)
         },
         deep: true
       }

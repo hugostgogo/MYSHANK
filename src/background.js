@@ -115,10 +115,10 @@ ipcMain.handle('setSource', (event, pin) => {
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
 })
 
-ipcMain.handle('setStatus', (event, payload) => {
+ipcMain.handle('setHeating', (event, state) => {
   rpio.init()
   rpio.open(24, rpio.OUTPUT)
-  rpio.write(24, payload.heating ? rpio.HIGH : rpio.LOW)
+  rpio.write(24, state)
 })
 
 ipcMain.handle('leadIn', (event, delay) => {
