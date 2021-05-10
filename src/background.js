@@ -129,11 +129,11 @@ ipcMain.handle('leadIn', (event, paload) => {
   }, 5400)
 })
 
-ipcMain.handle('space', (event, paload) => {
-  run(cwd, "gpio mode 26 pwm")
-  run(cwd, "gpio pwm 26 1024")
+ipcMain.handle('space', (event) => {
+  run(undefined, "gpio mode 26 pwm")
+  run(undefined, "gpio pwm 26 1024")
   setTimeout(() => {
-    run(cwd, "gpio pwm 26 0")
+    run(undefined, "gpio pwm 26 0")
   }, 450)
 })
 
