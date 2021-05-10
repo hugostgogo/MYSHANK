@@ -151,6 +151,7 @@ function getSpeed(cwd) {
   var rangeValue = parseInt(rawValue / 26200 * 1024)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 1024) rangeValue = 1024
+  console.log(`Speed : ${rangeValue}`)
   run(cwd, `gpio pwm 26 ${rangeValue}`)
   return rangeValue
 }
