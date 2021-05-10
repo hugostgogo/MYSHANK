@@ -147,12 +147,12 @@ function getHeating(cwd) {
 }
 
 function getSpeed(cwd) {
-  var rawValue = 220 // run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  var rawValue = Math.random() * 220 // run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
   var rangeValue = parseInt(rawValue / 241.27)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 1024) rangeValue = 1024
   console.log(`Speed : ${rangeValue}`)
-  run(cwd, `gpio pwm 26 1024`)
+  run(cwd, `gpio pwm 26 ${rangeValue}`)
   return rangeValue
 }
 
