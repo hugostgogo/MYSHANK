@@ -108,8 +108,6 @@ ipcMain.handle('setSource', (event, pin) => {
   rpio.write(18, rpio.LOW)
   rpio.write(16, rpio.LOW)
 
-  console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
-
   rpio.write(pin, rpio.HIGH)
 
   console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
@@ -124,20 +122,18 @@ ipcMain.handle('setStatus', (event, payload) => {
 })
 
 ipcMain.handle('leadIn', (event, paload) => {
-  rpio.open(26, rpio.PWM)
-  rpio.pwmSetRange(26, 1024)
-  rpio.pwmSetData(26, 1024)
+  run(cwd, "gpio mode 26 pwm")
+  run(cwd, "gpio pwm 26 1024")
   setTimeout(() => {
-    rpio.pwmSetData(26, 0)
+    run(cwd, "gpio pwm 26 0")
   }, 5400)
 })
 
 ipcMain.handle('space', (event, paload) => {
-  rpio.open(26, rpio.PWM)
-  rpio.pwmSetRange(26, 1024)
-  rpio.pwmSetData(26, 1024)
+  run(cwd, "gpio mode 26 pwm")
+  run(cwd, "gpio pwm 26 1024")
   setTimeout(() => {
-    rpio.pwmSetData(26, 0)
+    run(cwd, "gpio pwm 26 0")
   }, 450)
 })
 
