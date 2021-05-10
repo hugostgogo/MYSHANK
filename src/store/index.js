@@ -102,10 +102,15 @@ export default new Vuex.Store({
       })
     },
 
+    setSpeed(state, payload) {
+      state.status.speed = payload
+    },
+
     setHeating(state, payload) {
       state.status.heating = payload
       window.require("electron").ipcRenderer.invoke('setHeating', payload)
     },
+
     setLeadInDelay(state, delay) {
       state.leadIn.delay = delay
     },

@@ -163,5 +163,5 @@ ipcMain.handle('getHeatingValue',(event) => {
 
 ipcMain.handle('getSpeedValue',(event) => {
   var res = getSpeed()
-  return parseInt(res)
+  return parseInt(res) / 241.27
 })

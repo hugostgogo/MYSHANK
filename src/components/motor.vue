@@ -3,7 +3,7 @@
     <v-flex>
       <v-flex class="d-flex justify-space-between align-center">
         <span class="text-h5">Motor speed <span v-if="status.speed">: {{ speed }} %</span></span>
-        <v-switch v-model="status.speed"></v-switch>
+        <v-switch v-model="status.speed" @change="setSpeed"></v-switch>
       </v-flex>
       <v-fade-transition>
         <v-progress-linear v-if="status.speed" top v-model="speed" height="50"></v-progress-linear>
@@ -27,16 +27,8 @@ import { mapGetters, mapMutations } from 'vuex'
     },
     methods: {
       ...mapMutations([
-        'setMotor'
+        'setSpeed'
       ]),
-    },
-    watch: {
-      status: {
-        handler(val) {
-          this.setMotor(val)
-        },
-        deep: true
-      }
-    },
+    }
   }
 </script>
