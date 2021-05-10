@@ -119,7 +119,7 @@ ipcMain.handle('setHeating', (event, state) => {
   console.log(`HEATING: ${state}`)
   rpio.init()
   rpio.open(24, rpio.OUTPUT)
-  rpio.write(24, state)
+  rpio.write(24, state ? rpio.HIGH : rpio.LOW)
 })
 
 ipcMain.handle('leadIn', (event, delay) => {
