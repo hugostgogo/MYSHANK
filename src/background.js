@@ -147,7 +147,7 @@ function getHeating(cwd) {
 }
 
 function getSpeed(cwd) {
-  var rawValue = 220000 // run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  var rawValue = 22000 // run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
   var rangeValue = parseInt(rawValue / 26200 * 1024)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 1024) rangeValue = 1024
@@ -163,5 +163,5 @@ ipcMain.handle('getHeatingValue',(event) => {
 
 ipcMain.handle('getSpeedValue',(event) => {
   var res = getSpeed()
-  return parseInt(res) / 241.27
+  return parseInt(res)
 })
