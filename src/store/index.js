@@ -124,8 +124,8 @@ export default new Vuex.Store({
     leadIn (state) {
       window.require("electron").ipcRenderer.invoke('leadIn', state.leadIn.delay)
     },
-    space () {
-      window.require("electron").ipcRenderer.invoke('space')
+    space (state) {
+      window.require("electron").ipcRenderer.invoke('space', state.space.delay)
     },
     setLeadIn (state, delay) {
       localStorage.setItem('leadInDelay', delay)
