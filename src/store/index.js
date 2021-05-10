@@ -121,19 +121,19 @@ export default new Vuex.Store({
 
   },
   actions: {
-    leadIn (state) {
-      window.require("electron").ipcRenderer.invoke('leadIn', state.leadIn.delay)
+    leadIn (store) {
+      window.require("electron").ipcRenderer.invoke('leadIn', store.state.leadIn.delay)
     },
-    space (state) {
-      window.require("electron").ipcRenderer.invoke('space', state.space.delay)
+    space (store) {
+      window.require("electron").ipcRenderer.invoke('space', store.state.space.delay)
     },
-    setLeadIn (state, delay) {
+    setLeadIn (store, delay) {
       localStorage.setItem('leadInDelay', delay)
-      state.commit('setLeadInDelay', delay)
+      store.commit('setLeadInDelay', delay)
     },
-    setSpace (state, delay) {
+    setSpace (store, delay) {
       localStorage.setItem('spaceDelay', delay)
-      state.commit('setSpaceDelay', delay)
+      store.commit('setSpaceDelay', delay)
     }
   },
   modules: {
