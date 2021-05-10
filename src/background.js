@@ -116,6 +116,7 @@ ipcMain.handle('setSource', (event, pin) => {
 })
 
 ipcMain.handle('setHeating', (event, state) => {
+  console.log(`HEATING: ${state}`)
   rpio.init()
   rpio.open(24, rpio.OUTPUT)
   rpio.write(24, state)
