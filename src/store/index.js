@@ -78,12 +78,12 @@ export default new Vuex.Store({
       })
     },
     syncHeating(state) {
-      window.require("electron").ipcRenderer.invoke('getHeatingValue').then((value) => {
+      /* window.require("electron").ipcRenderer.invoke('getHeatingValue').then((value) => {
         state.displays.heating.value = value
       })
       window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
         state.displays.speed.value = value
-      })
+      }) */
     },
 
     setStatus(state, payload) {
@@ -106,7 +106,7 @@ export default new Vuex.Store({
       window.require("electron").ipcRenderer.invoke('leadIn')
     },
     space () {
-      window.require("electron").ipcRenderer.invoke('space')  
+      window.require("electron").ipcRenderer.invoke('space')
     }
   },
   modules: {
