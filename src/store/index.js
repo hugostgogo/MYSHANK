@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { ipcRenderer } from 'electron'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -79,7 +81,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setSelection(state, pin) {
-      window.require("electron").ipcRenderer.invoke('setSource', pin).then((result) => {
+      ipcRenderer.invoke('setSource', pin).then((result) => {
         state.commands.phono.value = result.phono ? true : false
         state.commands.feedBack.value = result.feedBack ? true : false
         state.commands.lineIn.value = result.lineIn ? true : false
@@ -96,12 +98,12 @@ export default new Vuex.Store({
 
     setSpeed(state, payload) {
       state.status.speed = payload
-      if (!payload) window.require("electron").ipcRenderer.invoke('stopSpeed', payload)
+      if (!payload) ipcRenderer.invoke('stopSpeed', payload)
     },
 
     setHeating(state, payload) {
       state.status.heating = payload
-      window.require("electron").ipcRenderer.send('setHeating', payload)
+      ipcRenderer.send('setHeating', payload)
     },
 
     setLeadInDelay(state, delay) {
@@ -115,10 +117,10 @@ export default new Vuex.Store({
   },
   actions: {
     leadIn (store) {
-      window.require("electron").ipcRenderer.invoke('leadIn', store.state.leadIn.delay)
+      ipcRenderer.send('leadIn', store.state.leadIn.delay)
     },
     space (store) {
-      window.require("electron").ipcRenderer.invoke('space', store.state.space.delay)
+      ipcRenderer.send('space', store.state.space.delay)
     },
     setLeadIn (store, delay) {
       localStorage.setItem('leadInDelay', delay)
@@ -137,10 +139,7 @@ export default new Vuex.Store({
     },
 
     async syncADC (store, payload) {
-      console.log(`STORE : _____ heating: ${payload.heating}, speed: ${payload.speed}`)
-      const value = await window.require("electron").ipcRenderer.invoke('getADC', payload.heating, payload.speed)
-      console.log(`return`)
-      console.log(value)
+      const value = await ipcRenderer.invoke('getADC', payload.heating, payload.speed)
       store.commit('syncSpeed', value.speed)
       store.commit('syncHeating', value.heating)
     },

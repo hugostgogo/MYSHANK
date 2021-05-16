@@ -160,7 +160,7 @@ ipcMain.handle('stopSpeed', (event) => {
   run(undefined, "gpio pwm 26 0")
 })
 
-ipcMain.handle('leadIn', (event, delay) => {
+ipcMain.on('leadIn', (event, delay) => {
   run(undefined, "gpio mode 26 pwm")
   run(undefined, "gpio pwm 26 1024")
   setTimeout(() => {
@@ -168,7 +168,7 @@ ipcMain.handle('leadIn', (event, delay) => {
   }, delay)
 })
 
-ipcMain.handle('space', (event, delay) => {
+ipcMain.on('space', (event, delay) => {
   run(undefined, "gpio mode 26 pwm")
   run(undefined, "gpio pwm 26 1024")
   setTimeout(() => {
