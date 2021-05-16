@@ -133,7 +133,6 @@ export default new Vuex.Store({
     setSpace (store, delay) {
       localStorage.setItem('spaceDelay', delay)
       store.commit('setSpaceDelay', delay)
-      console.log(delay)
     },
     setColor (store, color) {
       localStorage.setItem('primaryColor', color)
@@ -150,6 +149,7 @@ export default new Vuex.Store({
 
     async syncHeating (store) {
       const value = await ipcRenderer.invoke('getHeatingValue')
+      console.log(`action syncHeating: ${value}`)
       store.commit('syncHeating', value)
     }
 

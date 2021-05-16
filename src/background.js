@@ -142,9 +142,8 @@ function getSpeed(cwd) {
   const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
   let rangeValue = parseInt(rawValue * 100 / 2048)
   if (rangeValue < 0) rangeValue = 0
-  if (rangeValue > 100) rangeValue = 100
+  if (rangeValue >= 99) rangeValue = 100
   run(cwd, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
-  console.log(`clear && speed: ${rangeValue}`)
   return rangeValue
 }
 
