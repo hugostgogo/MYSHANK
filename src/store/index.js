@@ -138,12 +138,13 @@ export default new Vuex.Store({
 
     async syncSpeed (store) {
       const value = await window.require("electron").ipcRenderer.invoke('getSpeedValue')
+      console.log(`SPEED: ${value}`)
       store.commit('syncSpeed', value)
     },
 
     async syncHeating (store) {
       const value = await window.require("electron").ipcRenderer.invoke('getHeatingValue')
-      console.log(`action syncHeating: ${value}`)
+      console.log(`SPEED: ${value}`)
       store.commit('syncHeating', value)
     }
 
