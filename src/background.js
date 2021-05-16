@@ -117,12 +117,6 @@ function run(cwd, command) {
   return execSync(command, { cwd, encoding: "utf8" })
 }
 
-function getHeating(cwd) {
-
-
-  return rangeValue
-}
-
 function getADC(heating = false, speed = false) {
   let returnObj
   if (heating) {
