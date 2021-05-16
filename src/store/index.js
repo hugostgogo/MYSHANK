@@ -52,7 +52,7 @@ export default new Vuex.Store({
       return state.commands.lineIn
     },
     heating: state => {
-      return (255 - state.displays.heating.value) / 255 * 100
+      return parseInt(state.displays.heating.value * 100 / 2048)
     },
     heatingLabel: state => {
       var value = (state.displays.heating.value / 255).toString()
@@ -63,7 +63,7 @@ export default new Vuex.Store({
       return result
     },
     speed: state => {
-      return state.displays.speed.value
+      return parseInt(state.displays.speed.value * 100 / 1024)
     },
     speedLabel: state => {
      return state.displays.speed.value / 1024 * 100

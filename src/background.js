@@ -116,7 +116,6 @@ ipcMain.handle('setSource', (event, pin) => {
 })
 
 ipcMain.handle('setHeating', (event, state) => {
-  console.log(`HEATING: ${state}`)
   rpio.init()
   rpio.open(24, rpio.OUTPUT)
   rpio.write(24, state ? rpio.HIGH : rpio.LOW)
@@ -143,12 +142,16 @@ function run(cwd, command) {
 }
 
 function getHeating(cwd) {
-  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  let rangeValue = parseInt(rawValue/2)
+  if (rangeValue < 0) rangeValue = 0
+  if (rangeValue > 1024) rangeValue = 1024
+  return rangeValue
 }
 
 function getSpeed(cwd) {
-  var rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
-  var rangeValue = parseInt(rawValue / 2)
+  const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
+  let rangeValue = parseInt(rawValue / 2)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 1024) rangeValue = 1024
   run(cwd, `gpio pwm 26 ${rangeValue}`)
@@ -157,14 +160,10 @@ function getSpeed(cwd) {
 
 ipcMain.handle('getHeatingValue',(event) => {
   var res = getHeating()
-
-  console.log(`Heating format: ${parseInt(res / 2)}`)
-  console.log(`Heating non-format: ${parseInt(res)}`)
-
-  return parseInt(res)
+  return res
 })
 
 ipcMain.handle('getSpeedValue',(event) => {
   var res = getSpeed()
-  return parseInt(res)
+  return res
 })
