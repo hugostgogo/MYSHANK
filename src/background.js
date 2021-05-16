@@ -127,19 +127,20 @@ function getADC(heating, speed) {
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
     let rangeValue = parseInt((rawValue - 94) * 100 / 1954)
     if (rangeValue < 0) rangeValue = 0
-    if (rangeValue > 100) rangeValue = 100
+    if (rangeValue >= 99) rangeValue = 100
     returnObj.heating = rangeValue
+    console.log(`HEATING: ${rawValue}`)
   }
   if (speed) {
     run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
     let rangeValue = parseInt(rawValue * 100 / 2048)
     if (rangeValue < 0) rangeValue = 0
-    if (rangeValue >= 99) rangeValue = 100
+    if (rangeValue > 100) rangeValue = 100
     run(undefined, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
     returnObj.speed = rangeValue
+    console.log(`SPEED: ${rawValue}`)
   }
-  console.log(returnObj)
   return returnObj
 }
 
