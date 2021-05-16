@@ -23,7 +23,7 @@ export default {
 
     window.setInterval(() => {
       console.log(this.speedStatus)
-      if (this.heatingStatus || this.speedStatus) this.syncADC(this.heatingStatus, this.speedStatus)
+      if (this.heatingStatus || this.speedStatus) this.syncADC({heating: this.heatingStatus, speed: this.speedStatus})
     }, 500)
   },
   methods: {
