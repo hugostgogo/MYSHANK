@@ -2,11 +2,11 @@
   <v-card class="mb-2 pa-3 px-5 d-flex align-center" style="flex-grow: 1">
     <v-flex>
       <v-flex class="d-flex justify-space-between align-center">
-        <span class="text-h5">Stylus heating<span v-if="status.heating"> : {{ heatingLabel }} A</span></span>
-        <v-switch v-model="status.heating" @change="toggle"></v-switch>
+        <span class="text-h5">Stylus heating<span v-if="heatingStatus"> : {{ heatingLabel }} A</span></span>
+        <v-switch :value="heatingStatus" @change="toggle"></v-switch>
       </v-flex>
       <v-fade-transition>
-        <v-progress-linear reverse readonly v-if="status.heating" v-model="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50"></v-progress-linear>
+        <v-progress-linear reverse readonly v-if="heatingStatus" :value="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50"></v-progress-linear>
       </v-fade-transition>
     </v-flex>
     <v-dialog v-model="dialog">
@@ -33,9 +33,6 @@
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   data: () => ({
-    status: {
-      heating: false,
-    },
     dialog: false
   }),
   methods: {
@@ -44,7 +41,6 @@ export default {
     ]),
     confirmDialog (i) {
       this.dialog = false
-      if (!i) this.status.heating = false
       this.setHeating(i)
     },
     toggle (val) {
@@ -57,7 +53,8 @@ export default {
   computed: {
     ...mapGetters([
       'heating',
-      'heatingLabel'
+      'heatingLabel',
+      'heatingStatus'
     ])
   },
 

@@ -3,10 +3,10 @@
     <v-flex>
       <v-flex class="d-flex justify-space-between align-center">
         <span class="text-h5">Motor speed <span v-if="speedStatus">: {{ speed }} %</span></span>
-        <v-switch v-model="speedSat" @change="setSpeed"></v-switch>
+        <v-switch :value="speedStatus" @change="setSpeed"></v-switch>
       </v-flex>
       <v-fade-transition>
-        <v-progress-linear v-if="speedStatus" top v-model="speed" height="50"></v-progress-linear>
+        <v-progress-linear v-if="speedStatus" top :value="speed" height="50" readonly></v-progress-linear>
       </v-fade-transition>
     </v-flex>
 </v-card>
@@ -14,11 +14,6 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
   export default {
-    data: () => ({
-      status: {
-        speed: false
-      }
-    }),
     computed: {
       ...mapGetters([
         'speed',

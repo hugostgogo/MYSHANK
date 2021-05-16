@@ -125,7 +125,7 @@ function getADC(heating, speed) {
   if (heating) {
     run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
-    let rangeValue = parseInt((rawValue - 94) * 100 / 1954)
+    let rangeValue = parseInt((rawValue - 100) * 100 / 1947)
     if (rangeValue < 0) rangeValue = 0
     if (rangeValue >= 99) rangeValue = 100
     returnObj.heating = rangeValue
