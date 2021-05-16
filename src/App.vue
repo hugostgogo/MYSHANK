@@ -22,7 +22,7 @@ export default {
     if (spaceDelay) this.setSpaceDelay(spaceDelay)
 
     window.setInterval(() => {
-      if (this.heatingStatus || this.speedStatus) this.syncADC()
+      if (this.heatingStatus || this.speedStatus) this.syncADC(this.heatingStatus, this.speedStatus)
     }, 500)
   },
   methods: {
