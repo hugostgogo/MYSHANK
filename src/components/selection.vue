@@ -29,11 +29,11 @@
     <v-flex class="d-flex">
       <v-flex class="d-flex flex-column justify-center align-center">
         <h5>STYLUS HEATING</h5>
-        <h3>{{ heatingLabel }} A</h3>
+        <h3 v-if="heatingStatus">{{ heatingLabel }} A</h3>
       </v-flex>
       <v-flex class="d-flex flex-column justify-center align-center">
         <h5>MOTOR SPEED</h5>
-        <h3>{{ speedLabel }} %</h3>
+        <h3 v-if="heatingStatus">{{ speedLabel }} %</h3>
       </v-flex>
     </v-flex>
   </v-card>
@@ -48,7 +48,9 @@ export default {
       'feedBack',
       'lineIn',
       'heatingLabel',
-      'speedLabel'
+      'speedLabel',
+      'speedStatus',
+      'heatingStatus'
     ]),
   },
   methods: {
