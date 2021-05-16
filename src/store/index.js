@@ -101,7 +101,7 @@ export default new Vuex.Store({
 
     setHeating(state, payload) {
       state.status.heating = payload
-      window.require("electron").ipcRenderer.invoke('setHeating', payload)
+      window.require("electron").ipcRenderer.send('setHeating', payload)
     },
 
     setLeadInDelay(state, delay) {

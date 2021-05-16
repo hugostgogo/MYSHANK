@@ -132,7 +132,7 @@ ipcMain.handle('getHeatingValue',(event) => {
   return res
 })
 
-ipcMain.handle('setHeating', (event, state) => {
+ipcMain.on('setHeating', (event, state) => {
   rpio.init()
   rpio.open(24, rpio.OUTPUT)
   rpio.write(24, state ? rpio.HIGH : rpio.LOW)
