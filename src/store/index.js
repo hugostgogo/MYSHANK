@@ -104,6 +104,7 @@ export default new Vuex.Store({
 
     setSpeed(state, payload) {
       state.status.speed = payload
+      if (!payload) window.require("electron").ipcRenderer.invoke('stopSpeed', payload)
     },
 
     setHeating(state, payload) {
