@@ -52,15 +52,11 @@ export default new Vuex.Store({
       return state.commands.lineIn
     },
     heating: state => {
-      return parseInt(state.displays.heating.value)
+      return parseInt(100 - state.displays.heating.value)
     },
     heatingLabel: state => {
       var value = (state.displays.heating.value / 100).toString()
-      let result = value[0]
-      for (var i = 1; i < 4; i++) {
-        result += value[i]
-      }
-      return result
+      return value.slice(0, 4)
     },
     speed: state => {
       return state.displays.speed.value
