@@ -137,7 +137,7 @@ function getADC(heating = false, speed = false) {
     let rangeValue = parseInt(rawValue * 100 / 2048)
     if (rangeValue < 0) rangeValue = 0
     if (rangeValue >= 99) rangeValue = 100
-    run(cwd, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
+    run(undefined, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
     returnObj.speed = rangeValue
   }
   return returnObj
