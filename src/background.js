@@ -35,6 +35,8 @@ async function createWindow() {
 
   })
 
+  process.setMaxListeners(0);
+
   win.setMenu(null);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -78,6 +80,7 @@ app.on('ready', async () => {
     }
   }
   createWindow()
+
 })
 
 // Exit cleanly on request from parent process in development mode.
