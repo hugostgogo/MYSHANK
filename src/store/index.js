@@ -3,8 +3,6 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const ipcRenderer = window.require("electron").ipcRenderer
-
 export default new Vuex.Store({
   state: {
     commands: {
@@ -143,12 +141,12 @@ export default new Vuex.Store({
     },
 
     async syncSpeed (store) {
-      const value = await ipcRenderer.invoke('getSpeedValue')
+      const value = await window.require("electron").ipcRenderer.invoke('getSpeedValue')
       store.commit('syncSpeed', value)
     },
 
     async syncHeating (store) {
-      const value = await ipcRenderer.invoke('getHeatingValue')
+      const value = await window.require("electron").ipcRenderer.invoke('getHeatingValue')
       console.log(`action syncHeating: ${value}`)
       store.commit('syncHeating', value)
     }
