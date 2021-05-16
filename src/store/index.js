@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { ipcRenderer } from 'electron'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -81,7 +79,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setSelection(state, pin) {
-      ipcRenderer.invoke('setSource', pin).then((result) => {
+      window.require("electron").ipcRenderer.invoke('setSource', pin).then((result) => {
         state.commands.phono.value = result.phono ? true : false
         state.commands.feedBack.value = result.feedBack ? true : false
         state.commands.lineIn.value = result.lineIn ? true : false
@@ -98,12 +96,12 @@ export default new Vuex.Store({
 
     setSpeed(state, payload) {
       state.status.speed = payload
-      if (!payload) ipcRenderer.invoke('stopSpeed', payload)
+      if (!payload) window.require("electron").ipcRenderer.invoke('stopSpeed', payload)
     },
 
     setHeating(state, payload) {
       state.status.heating = payload
-      ipcRenderer.send('setHeating', payload)
+      window.require("electron").ipcRenderer.send('setHeating', payload)
     },
 
     setLeadInDelay(state, delay) {
@@ -117,10 +115,10 @@ export default new Vuex.Store({
   },
   actions: {
     leadIn (store) {
-      ipcRenderer.send('leadIn', store.state.leadIn.delay)
+      window.require("electron").ipcRenderer.send('leadIn', store.state.leadIn.delay)
     },
     space (store) {
-      ipcRenderer.send('space', store.state.space.delay)
+      window.require("electron").ipcRenderer.send('space', store.state.space.delay)
     },
     setLeadIn (store, delay) {
       localStorage.setItem('leadInDelay', delay)
@@ -139,7 +137,7 @@ export default new Vuex.Store({
     },
 
     async syncADC (store, payload) {
-      const value = await ipcRenderer.invoke('getADC', payload.heating, payload.speed)
+      const value = await window.require("electron").ipcRenderer.invoke('getADC', payload.heating, payload.speed)
       store.commit('syncSpeed', value.speed)
       store.commit('syncHeating', value.heating)
     },
