@@ -121,7 +121,7 @@ function run(cwd, command) {
 
 function getHeating(cwd) {
   const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
-  let rangeValue = parseInt((x-94) * 100 / 1954)
+  let rangeValue = parseInt((rawValue-94) * 100 / 1954)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 100) rangeValue = 100
   return rangeValue
