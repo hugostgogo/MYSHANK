@@ -117,7 +117,7 @@ function run(cwd, command) {
   return execSync(command, { cwd, encoding: "utf8" })
 }
 
-function getADC(heating = false, speed = false) {
+function getADC(heating, speed) {
   let returnObj = {}
   if (heating) {
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
@@ -137,7 +137,7 @@ function getADC(heating = false, speed = false) {
   return returnObj
 }
 
-ipcMain.handle('getADC',(event, heating = false, speed = false) => {
+ipcMain.handle('getADC',(event, heating, speed) => {
   var res = getADC(heating, speed)
   console.log(`heating: ${heating}, speed: ${speed}`)
   return res
