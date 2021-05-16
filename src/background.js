@@ -143,11 +143,11 @@ function run(cwd, command) {
 }
 
 function getHeating(cwd) {
-  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0-voltage1_raw")
+  return run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
 }
 
 function getSpeed(cwd) {
-  var rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+  var rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
   var rangeValue = parseInt(rawValue / 2)
   if (rangeValue < 0) rangeValue = 0
   if (rangeValue > 1024) rangeValue = 1024
