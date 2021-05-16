@@ -25,7 +25,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 480,
-    fullscreen: false,
+    fullscreen: true,
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
