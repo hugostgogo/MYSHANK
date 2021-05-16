@@ -3,7 +3,7 @@
     <v-flex>
       <v-flex class="d-flex justify-space-between align-center">
         <span class="text-h5">Stylus heating<span v-if="heatingStatus"> : {{ heatingLabel }} A</span></span>
-        <v-switch :value="heatingStatus" @change="toggle"></v-switch>
+        <v-switch :input-value="heatingStatus" @change="toggle"></v-switch>
       </v-flex>
       <v-fade-transition>
         <v-progress-linear reverse readonly v-if="heatingStatus" :value="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50"></v-progress-linear>
