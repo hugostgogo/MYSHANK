@@ -6,7 +6,7 @@
         <v-switch v-model="speedSat" @change="setSpeed"></v-switch>
       </v-flex>
       <v-fade-transition>
-        <v-progress-linear v-if="speedSat" top v-model="speed" height="50"></v-progress-linear>
+        <v-progress-linear v-if="speedStatus" top v-model="speed" height="50"></v-progress-linear>
       </v-fade-transition>
     </v-flex>
 </v-card>
@@ -23,10 +23,7 @@ import { mapGetters, mapMutations } from 'vuex'
       ...mapGetters([
         'speed',
         'speedStatus',
-      ]),
-      speedSat () {
-        return this.speedStatus
-      }
+      ])
     },
     methods: {
       ...mapMutations([
