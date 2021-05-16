@@ -123,6 +123,7 @@ function run(cwd, command) {
 function getADC(heating, speed) {
   let returnObj = {}
   if (heating) {
+    run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
     let rangeValue = parseInt((rawValue - 94) * 100 / 1954)
     if (rangeValue < 0) rangeValue = 0
@@ -130,6 +131,7 @@ function getADC(heating, speed) {
     returnObj.heating = rangeValue
   }
   if (speed) {
+    run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
     let rangeValue = parseInt(rawValue * 100 / 2048)
     if (rangeValue < 0) rangeValue = 0
