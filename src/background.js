@@ -137,7 +137,7 @@ function getADC(heating = false, speed = false) {
   return returnObj
 }
 
-ipcMain.handle('getADC',(event, heating, speed) => {
+ipcMain.handle('getADC',(event, heating = false, speed = false) => {
   var res = getADC(heating, speed)
   console.log(`heating: ${heating}, speed: ${speed}`)
   return res
