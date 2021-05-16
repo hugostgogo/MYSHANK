@@ -118,7 +118,7 @@ function run(cwd, command) {
 }
 
 function getADC(heating = false, speed = false) {
-  let returnObj
+  let returnObj = {}
   if (heating) {
     const rawValue = run(undefined, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
     let rangeValue = parseInt((rawValue - 94) * 100 / 1954)

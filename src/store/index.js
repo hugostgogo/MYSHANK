@@ -137,10 +137,9 @@ export default new Vuex.Store({
     },
 
     async syncADC (store, heating, speed) {
-      console.log("heating, speed")
-      console.log(heating, speed)
+      console.log(`STORE : _____ heating: ${heating}, speed: ${speed}`)
       const value = await window.require("electron").ipcRenderer.invoke('getADC', heating, speed)
-      console.log(`OBJ: ${value}`)
+      console.log(`return: ${value}`)
       store.commit('syncSpeed', value.speed)
       store.commit('syncHeating', value.heating)
     },
