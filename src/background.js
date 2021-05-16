@@ -110,8 +110,6 @@ ipcMain.handle('setSource', (event, pin) => {
 
   rpio.write(pin, rpio.HIGH)
 
-  console.log({ phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22) })
-
   return { phono: rpio.read(16), lineIn: rpio.read(18), feedBack: rpio.read(22), }
 })
 
@@ -120,15 +118,33 @@ function run(cwd, command) {
 }
 
 function getHeating(cwd) {
-  const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
-  let rangeValue = parseInt((rawValue-94) * 100 / 1954)
-  if (rangeValue < 0) rangeValue = 0
-  if (rangeValue > 100) rangeValue = 100
+
+
   return rangeValue
 }
 
-ipcMain.handle('getHeatingValue',(event) => {
-  var res = getHeating()
+function getADC(cwd, heating = false, speed = false) {
+  let returnObj
+  if (heating) {
+    const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage0_raw")
+    let rangeValue = parseInt((rawValue - 94) * 100 / 1954)
+    if (rangeValue < 0) rangeValue = 0
+    if (rangeValue > 100) rangeValue = 100
+    returnObj.heating = rangeValue
+  }
+  if (speed) {
+    const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
+    let rangeValue = parseInt(rawValue * 100 / 2048)
+    if (rangeValue < 0) rangeValue = 0
+    if (rangeValue >= 99) rangeValue = 100
+    run(cwd, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
+    returnObj.speed = rangeValue
+  }
+  return returnObj
+}
+
+ipcMain.handle('getADC',(event, heating, speed) => {
+  var res = getADC(heating, speed)
   return res
 })
 
@@ -137,15 +153,6 @@ ipcMain.on('setHeating', (event, state) => {
   rpio.open(24, rpio.OUTPUT)
   rpio.write(24, state ? rpio.HIGH : rpio.LOW)
 })
-
-function getSpeed(cwd) {
-  const rawValue = run(cwd, "cat /sys/bus/iio/devices/iio\:device0/in_voltage1_raw")
-  let rangeValue = parseInt(rawValue * 100 / 2048)
-  if (rangeValue < 0) rangeValue = 0
-  if (rangeValue >= 99) rangeValue = 100
-  run(cwd, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
-  return rangeValue
-}
 
 ipcMain.handle('stopSpeed', (event) => {
   run(undefined, "gpio mode 26 pwm")
@@ -166,10 +173,4 @@ ipcMain.handle('space', (event, delay) => {
   setTimeout(() => {
     run(undefined, "gpio pwm 26 0")
   }, delay)
-})
-
-
-ipcMain.handle('getSpeedValue',(event) => {
-  var res = getSpeed()
-  return res
 })

@@ -22,8 +22,7 @@ export default {
     if (spaceDelay) this.setSpaceDelay(spaceDelay)
 
     window.setInterval(() => {
-      if (this.heatingStatus) this.syncHeating()
-      if (this.speedStatus) this.syncSpeed()
+      if (this.heatingStatus || this.speedStatus) this.syncADC()
     }, 500)
   },
   methods: {
@@ -33,8 +32,7 @@ export default {
     ]),
     ...mapActions([
       'initialize',
-      'syncSpeed',
-      'syncHeating',
+      'syncADC',
     ])
   },
   computed: {
