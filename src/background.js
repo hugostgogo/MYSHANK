@@ -139,12 +139,12 @@ function getADC(heating, speed) {
     run(undefined, `gpio pwm 26 ${parseInt(rangeValue * 10.24)}`)
     returnObj.speed = rangeValue
   }
+  console.log(returnObj)
   return returnObj
 }
 
 ipcMain.handle('getADC',(event, heating, speed) => {
   var res = getADC(heating, speed)
-  console.log(`heating: ${heating}, speed: ${speed}`)
   return res
 })
 
