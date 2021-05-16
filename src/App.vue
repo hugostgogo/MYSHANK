@@ -22,9 +22,10 @@ export default {
     if (spaceDelay) this.setSpaceDelay(spaceDelay)
 
     window.setInterval(() => {
-
       if (this.heatingStatus || this.speedStatus) this.syncADC({heating: this.heatingStatus, speed: this.speedStatus})
     }, 500)
+
+    document.body.style.cursor = "none";
   },
   methods: {
     ...mapMutations([
