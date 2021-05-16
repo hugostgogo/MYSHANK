@@ -52,7 +52,7 @@ export default new Vuex.Store({
       return state.commands.lineIn
     },
     heating: state => {
-      return parseInt(state.displays.heating.value / 100)
+      return parseInt(state.displays.heating.value)
     },
     heatingLabel: state => {
       var value = (state.displays.heating.value / 100).toString()
@@ -63,7 +63,7 @@ export default new Vuex.Store({
       return result
     },
     speed: state => {
-      return state.displays.speed.value / 100
+      return state.displays.speed.value
     },
     speedLabel: state => {
      return state.displays.speed.value
@@ -96,10 +96,8 @@ export default new Vuex.Store({
       })
     },
 
-    syncSpeed(state) {
-      window.require("electron").ipcRenderer.invoke('getSpeedValue').then((value) => {
-        state.displays.speed.value = value
-      })
+    syncSpeed(state, value) {
+      state.displays.speed.value = value
     },
 
     setSpeed(state, payload) {
@@ -143,6 +141,11 @@ export default new Vuex.Store({
     initialize (store) {
       store.commit('setSpeed', false)
       store.commit('setHeating', false)
+    },
+
+    async syncSpeed (store) {
+      const value = await window.require("electron").ipcRenderer.invoke('getSpeedValue')
+      store.commit('syncSpeed', value)
     }
   },
   modules: {

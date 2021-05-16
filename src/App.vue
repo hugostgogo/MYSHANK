@@ -29,12 +29,12 @@ export default {
   methods: {
     ...mapMutations([
       'syncHeating',
-      'syncSpeed',
       'setLeadInDelay',
       'setSpaceDelay'
     ]),
     ...mapActions([
-      'initialize'
+      'initialize',
+      'syncSpeed'
     ])
   },
   computed: {
