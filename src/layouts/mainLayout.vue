@@ -1,7 +1,7 @@
 <template>
   <v-layout column fill-height>
     <v-flex shrink>
-      <v-tabs>
+      <v-tabs fixed-tabs>
         <v-tab :to="{ name: 'selection' }">Source selection</v-tab>
         <v-tab :to="{ name: 'sensors' }">Sensors</v-tab>
         <v-tab :to="{ name: 'functions' }">Functions</v-tab>
@@ -9,7 +9,7 @@
       </v-tabs>
     </v-flex>
     <v-flex grow>
-      <transition name="custom">
+      <transition name="custom" mode="out-in">
         <router-view class="pa-5" style="height: 100%"/>
       </transition>
     </v-flex>
@@ -24,7 +24,6 @@ export default {
 <style>
 .custom-enter-active {
   transition: all .25s;
-  transition-delay: .25s;
 }
 
 .custom-leave-active {
@@ -34,7 +33,6 @@ export default {
 .custom-enter,
 .custom-leave-to
 {
-  transform: scale(-50%);
   opacity: 0;
 }
 </style>

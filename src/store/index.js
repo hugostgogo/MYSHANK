@@ -39,7 +39,8 @@ export default new Vuex.Store({
     },
     leadIn: {
       delay: 5400
-    }
+    },
+    errorDialog: false
   },
   getters: {
     phono: state => {
@@ -75,7 +76,8 @@ export default new Vuex.Store({
     },
     spaceDelay: state => {
       return state.space.delay
-    }
+    },
+    errorDialog: state => state.errorDialog,
   },
   mutations: {
     setSelection(state, pin) {
@@ -109,6 +111,9 @@ export default new Vuex.Store({
     },
     setSpaceDelay(state, delay) {
       state.space.delay = delay
+    },
+    errorDialog (state, value = true) {
+      state.errorDialog = value
     }
 
 
@@ -136,10 +141,19 @@ export default new Vuex.Store({
       store.commit('setHeating', false)
     },
 
+    errorDialog (store, value = true) {
+      store.commit('errorDialog', value)
+    },
+
     async syncADC (store, payload) {
       const value = await window.require("electron").ipcRenderer.invoke('getADC', payload.heating, payload.speed)
       store.commit('syncSpeed', value.speed)
       store.commit('syncHeating', value.heating)
+
+      let i = 101
+      if (i > 100) {
+        store.commit('setHeating', false)
+      }
     },
 
   },

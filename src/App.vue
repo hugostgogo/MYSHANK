@@ -1,18 +1,23 @@
 <template>
 <v-app>
   <v-main style="max-height: 100vh;">
-    <transition name="custom">
+    <transition name="custom" mode="out-in">
       <router-view />
     </transition>
+    <warning-dialog />
   </v-main>
 </v-app>
 </template>
 
 <script>
+import warningDialog from '@/components/warning'
 import { mapMutations, mapGetters, mapActions } from "vuex"
 export default {
   name: 'App',
   mounted() {
+    const primaryColor = localStorage.getItem('primaryColor')
+    if (primaryColor) this.$vuetify.theme.currentTheme.primary = primaryColor
+
     this.initialize()
 
     const leadInDelay = localStorage.getItem('leadInDelay')
@@ -24,8 +29,6 @@ export default {
     window.setInterval(() => {
       if (this.heatingStatus || this.speedStatus) this.syncADC({heating: this.heatingStatus, speed: this.speedStatus})
     }, 500)
-
-    document.body.style.cursor = "none";
   },
   methods: {
     ...mapMutations([
@@ -43,11 +46,18 @@ export default {
       heatingStatus: 'heatingStatus'
     })
 
+  },
+  components: {
+    warningDialog
   }
 };
 </script>
 
 <style>
+v-app {
+  cursor: 'none';
+}
+
 ::-webkit-scrollbar {
   width: 0px;
 }
@@ -61,10 +71,12 @@ export default {
   transition: all .25s;
 }
 
-.custom-enter,
+.custom-enter {
+  opacity: 0;
+}
+
 .custom-leave-to
 {
-  transform: scale(0);
-  opacity: 0;
+  transform: translateY(100%);
 }
 </style>

@@ -9,12 +9,9 @@
         <v-progress-linear reverse readonly v-if="heatingStatus" :value="heating" color="rgba(0,0,0, 0.7)" style="background: linear-gradient(0.25turn, #00ff00, #ffa500,#ff0000)" height="50"></v-progress-linear>
       </v-fade-transition>
     </v-flex>
-    <v-dialog v-model="dialog">
+    <v-dialog v-model="dialog" width="700">
       <v-card>
-        <v-toolbar color="error" dark>
-          <v-flex>
-            <span>confirmDialogation</span>
-          </v-flex>
+        <v-toolbar color="primary" dark>
         </v-toolbar>
         <v-flex class="d-flex flex-column align-center justify-center">
           <v-flex shrink class="py-3">
