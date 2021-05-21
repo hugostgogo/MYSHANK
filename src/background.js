@@ -100,6 +100,8 @@ if (isDevelopment) {
 
 // CUSTOM
 
+let isInFunction
+
 ipcMain.handle('setSource', (event, pin) => {
   rpio.open(16, rpio.OUTPUT, rpio.LOW)
   rpio.open(18, rpio.OUTPUT, rpio.LOW)
@@ -134,7 +136,7 @@ function getADC(heating, speed) {
     let rangeValue = parseInt(rawValue * 100 / 2047)
     if (rangeValue < 0) rangeValue = 0
     if (rangeValue > 100) rangeValue = 100
-    run(undefined, `gpio pwm 26 ${parseInt(rangeValue * 10.24 / 11)}`)
+    if (!isInFunction) run(undefined, `gpio pwm 26 ${parseInt(rangeValue * 10.24 / 11)}`)
     returnObj.speed = rangeValue
   }
   return returnObj
@@ -157,17 +159,21 @@ ipcMain.handle('stopSpeed', (event) => {
 })
 
 ipcMain.on('leadIn', (event, delay) => {
+  isInFunction = true
   run(undefined, "gpio mode 26 pwm")
   run(undefined, "gpio pwm 26 1024")
   setTimeout(() => {
     run(undefined, "gpio pwm 26 0")
+    isInFunction = false
   }, delay)
 })
 
 ipcMain.on('space', (event, delay) => {
+  isInFunction = true
   run(undefined, "gpio mode 26 pwm")
   run(undefined, "gpio pwm 26 1024")
   setTimeout(() => {
     run(undefined, "gpio pwm 26 0")
+    isInFunction = false
   }, delay)
 })
