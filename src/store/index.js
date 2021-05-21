@@ -154,6 +154,7 @@ export default new Vuex.Store({
 
       if (value.heating > 95) {
         store.commit('setHeating', false)
+        store.commit('errorDialog', true)
       }
     },
 
