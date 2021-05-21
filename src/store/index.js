@@ -123,13 +123,17 @@ export default new Vuex.Store({
       const state = store.getters.speedStatus
       store.commit('setSpeed', false)
       window.require("electron").ipcRenderer.send('leadIn', store.state.leadIn.delay)
-      store.commit('setSpeed', state)
+      setTimeout(() => {
+        store.commit('setSpeed', state)
+      }, store.state.leadIn.delay)
     },
     space (store) {
       const state = store.getters.speedStatus
       store.commit('setSpeed', false)
       window.require("electron").ipcRenderer.send('space', store.state.space.delay)
-      store.commit('setSpeed', state)
+      setTimeout(() => {
+        store.commit('setSpeed', state)
+      }, store.state.space.delay)
     },
     setLeadIn (store, delay) {
       localStorage.setItem('leadInDelay', delay)

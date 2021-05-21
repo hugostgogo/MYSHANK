@@ -54,8 +54,8 @@ export default {
 </script>
 
 <style>
-v-app {
-  cursor: 'none';
+* {
+  cursor: 'none' !important;
 }
 
 ::-webkit-scrollbar {
