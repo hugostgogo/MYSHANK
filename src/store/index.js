@@ -156,8 +156,6 @@ export default new Vuex.Store({
       store.commit('syncSpeed', value.speed)
       store.commit('syncHeating', value.heating)
 
-      console.log(`VAL: ${value.heating} < 95`)
-
       if (value.heating > 95) {
         store.commit('setHeating', false)
         store.commit('errorDialog', true)
