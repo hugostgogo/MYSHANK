@@ -150,8 +150,7 @@ export default new Vuex.Store({
       store.commit('syncSpeed', value.speed)
       store.commit('syncHeating', value.heating)
 
-      let i = 101
-      if (i > 100) {
+      if (value > 95) {
         store.commit('setHeating', false)
       }
     },
