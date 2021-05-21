@@ -120,10 +120,14 @@ export default new Vuex.Store({
   },
   actions: {
     leadIn (store) {
+      store.commit('setSpeed', false)
       window.require("electron").ipcRenderer.send('leadIn', store.state.leadIn.delay)
+      store.commit('setSpeed', store.getters.speedStatus)
     },
     space (store) {
+      store.commit('setSpeed', false)
       window.require("electron").ipcRenderer.send('space', store.state.space.delay)
+      store.commit('setSpeed', store.getters.speedStatus)
     },
     setLeadIn (store, delay) {
       localStorage.setItem('leadInDelay', delay)
