@@ -100,7 +100,7 @@ if (isDevelopment) {
 
 // CUSTOM
 
-let isInFunction
+let isInFunction = false
 
 ipcMain.handle('setSource', (event, pin) => {
   rpio.open(16, rpio.OUTPUT, rpio.LOW)
